@@ -17,22 +17,60 @@ alias to_dev="cd $DEV_DIR"
 alias to_vm="cd $VM_DIR"
 alias to_log="cd $LOG_DIR"
 
-# Manage mongodb
-alias mongo_up="cd $MONGO_VM && vagrant up || true; cd - >> /dev/null"
-alias mongo_down="cd $MONGO_VM && vagrant halt || true; cd - >> /dev/null"
-alias mongo_reload="cd $MONGO_VM && vagrant reload || true; cd - >> /dev/null"
+# Generic VM manager
+vm() {
+    if [ ! -f "$1"/Vagrantfile ]; then
+        echo "No Vagrant VM found in directory $1"
+        return 1
+    fi
 
-alias mongo_restore="cd $MONGO_VM && vagrant ssh -c 'cd /vagrant/ && mongorestore > tmp.log' 2> /dev/null && cat tmp.log && rm tmp.log || true; cd - >> /dev/null"
+    cd $1
+
+    case "$2" in
+        "up")
+            vagrant up || true
+            ;;
+        "down")
+            vagrant halt || true
+            ;;
+        "reload")
+            vagrant reload || true
+            ;;
+        "rebuild")
+            vagrant destroy -f || true
+            vagrant up || true
+            ;;
+        *)
+            echo "Incorrect command: $@"
+            ;;
+    esac
+
+    cd - >> /dev/null
+}
+
+# Manage mongo
+mongo() {
+    if [[ $1 = "restore" ]]
+    then
+       cd $MONGO_VM
+       vagrant ssh -c 'cd /vagrant/ && mongorestore > tmp.log' 2> /dev/null || true
+       cat tmp.log || true
+       rm tmp.log || true
+       cd - >> /dev/null
+    else
+        vm $MONGO_VM $1
+    fi
+}
 
 # Manage mariadb
-alias maria_up="cd $MARIA_VM && vagrant up || true; cd - >> /dev/null"
-alias maria_down="cd $MARIA_VM && vagrant halt || true; cd - >> /dev/null"
-alias maria_reload="cd $MARIA_VM && vagrant reload || true; cd - >> /dev/null"
+maria() {
+    vm $MARIA_VM $1
+}
 
 # Manage mysql
-alias mysql_up="cd $MYSQL_VM && vagrant up || true; cd - >> /dev/null"
-alias mysql_down="cd $MYSQL_VM && vagrant halt || true; cd - >> /dev/null"
-alias mysql_reload="cd $MYSQL_VM && vagrant reload || true; cd - >> /dev/null"
+mysql() {
+    vm $MYSQL_VM $1
+}
 
 # Development
 alias mvn_proxy_on="mv ~/.m2/settings.xml.tmp ~/.m2/settings.xml"
