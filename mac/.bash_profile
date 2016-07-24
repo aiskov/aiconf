@@ -8,6 +8,7 @@ export LOG_DIR="/var/log/"
 
 export MONGO_VM="$VM_DIR/mongodb/"
 export MARIA_VM="$VM_DIR/mariadb/"
+export MYSQL_VM="$VM_DIR/mariadb/"
 
 export SDKMAN_DIR="$HOME/.sdkman"
 
@@ -27,6 +28,11 @@ alias mongo_restore="cd $MONGO_VM && vagrant ssh -c 'cd /vagrant/ && mongorestor
 alias maria_up="cd $MARIA_VM && vagrant up || true; cd - >> /dev/null"
 alias maria_down="cd $MARIA_VM && vagrant halt || true; cd - >> /dev/null"
 alias maria_reload="cd $MARIA_VM && vagrant reload || true; cd - >> /dev/null"
+
+# Manage mysql
+alias mysql_up="cd $MYSQL_VM && vagrant up || true; cd - >> /dev/null"
+alias mysql_down="cd $MYSQL_VM && vagrant halt || true; cd - >> /dev/null"
+alias mysql_reload="cd $MYSQL_VM && vagrant reload || true; cd - >> /dev/null"
 
 # Development
 alias mvn_proxy_on="mv ~/.m2/settings.xml.tmp ~/.m2/settings.xml"
