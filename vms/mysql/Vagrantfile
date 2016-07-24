@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "ansible" do |ansible|
     ansible.verbose = "vv"
-    ansible.playbook = ENV["DEV_DIR"] + "provision/playbooks/mysql/install.yml"
+    ansible.playbook = ENV["DEV_DIR"] + "provision/playbooks/install_mysql.yml"
   end
 
   config.vm.provision "shell" do |shell|
