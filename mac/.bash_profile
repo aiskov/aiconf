@@ -8,7 +8,7 @@ export LOG_DIR="/var/log/"
 
 export MONGO_VM="$VM_DIR/mongodb/"
 export MARIA_VM="$VM_DIR/mariadb/"
-export MYSQL_VM="$VM_DIR/mariadb/"
+export MYSQL_VM="$VM_DIR/mysql/"
 
 export SDKMAN_DIR="$HOME/.sdkman"
 
