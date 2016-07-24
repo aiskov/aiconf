@@ -1,1 +1,1 @@
-# aiconf
+# Personal configuration files
