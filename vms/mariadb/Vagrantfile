@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 3306, host: 3306
 
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = ENV["DEV_DIR"] + "jiss-provision/playbooks/init.yml"
+    ansible.playbook = ENV["DEV_DIR"] + "provision/playbooks/init.yml"
   end
 
   config.vm.provision "shell" do |shell|
