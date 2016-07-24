@@ -17,3 +17,12 @@ Install:
     mkdir -p ~/VM/mariadb
     ln -s ~/Development/aiconf/vms/mariadb/Vagrantfile ~/VM/mariadb/Vagrantfile
 
+
+MariaDB
+-------
+
+Install:
+
+    mkdir -p ~/VM/mysql
+    ln -s ~/Development/aiconf/vms/mysql/Vagrantfile ~/VM/mysql/Vagrantfile
+
