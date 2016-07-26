@@ -14,6 +14,9 @@ brew install HTTPie
 
 brew install ansible
 
+# Install java 
+# TODO: Download and install java.
+
 # Install sdkman
 curl -s "https://get.sdkman.io" | bash
 source "$HOME/.sdkman/bin/sdkman-init.sh"
@@ -25,3 +28,6 @@ sdk install groovy
 sdk install maven
 sdk install sbt
 sdk install gradle
+
+# Generate keys
+ssh-keygen -t rsa
