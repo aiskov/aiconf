@@ -136,7 +136,7 @@ alias wifi_on="networksetup -setairportpower airport on"
 alias wifi_off="networksetup -setairportpower airport off"
 
 # Provisioning
-. "$DEV_DIR/jiss-provision/aliases.sh"
+[[ -d "$DEV_DIR/jiss-provision" ]] && . "$DEV_DIR/jiss-provision/aliases.sh"
 
 # SDKMan
-source "$SDKMAN_DIR/bin/sdkman-init.sh"
+[[ -d "$SDKMAN_DIR" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
