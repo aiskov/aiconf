@@ -86,6 +86,8 @@ function mov2mp4 {
 }
 
 # Work with docker
+export DOCKER_HOST=unix:///var/run/docker.sock
+
 alias d_ps="docker ps -a"
 alias d_img="docker images"
 alias d_img_rm="docker rmi"
@@ -96,6 +98,7 @@ alias d_run="docker run -t -i --net=host"
 alias d_stop="docker stop"
 alias d_deamon="docker run -d --net=host"
 alias d_attach="docker attach"
+alias d_log="docker log"
 
 function d_bash {
     docker exec -it $1 /bin/bash
