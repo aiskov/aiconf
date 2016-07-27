@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# Loactaions
+echo "AI Conf loaded"
+
+# Locations
 export DEV_DIR="$HOME/Development"
 export VM_DIR="$HOME/VM"
 export AI_CONF_DIR="$DEV_DIR/aiconf"
@@ -15,7 +17,7 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 # Configuration management
 aiconf() {
-    cd $AI_CONF_DIR
+    cd ${AI_CONF_DIR}
 
     case "$1" in
         "update")
@@ -74,24 +76,24 @@ vm() {
 mongo() {
     if [[ $1 = "restore" ]]
     then
-       cd $MONGO_VM
+       cd ${MONGO_VM}
        vagrant ssh -c 'cd /vagrant/ && mongorestore > tmp.log' 2> /dev/null || true
        cat tmp.log || true
        rm tmp.log || true
        cd - >> /dev/null
     else
-        vm $MONGO_VM $1
+        vm ${MONGO_VM} $1
     fi
 }
 
 # Manage mariadb
 maria() {
-    vm $MARIA_VM $1
+    vm ${MARIA_VM} $1
 }
 
 # Manage mysql
 mysql() {
-    vm $MYSQL_VM $1
+    vm ${MYSQL_VM} $1
 }
 
 # Development
@@ -120,12 +122,12 @@ d() {
             ;;
         "rmi")
             if [ "$2" = "untagged" ]; then
-                TAGETS="$(docker images | grep '"'"'^<none>'"'"' | awk '"'"'{print $3}'"'"')"
+                TARGETS="$(docker images | grep '"'"'^<none>'"'"' | awk '"'"'{print $3}'"'"')"
                 
                 if [ -z "$TARGETS" ]; then
                     echo "No containers runned"
                 else
-                    docker rmi $TAGETS
+                    docker rmi ${TARGETS}
                 fi
             else
                 docker rmi $2
@@ -140,7 +142,7 @@ d() {
         "build")
             docker build -t $2
             ;;
-        "deamon")
+        "daemon")
             docker run -d --net=host $2
             ;;
         "attach")
@@ -154,12 +156,12 @@ d() {
             ;;
         "stop")
             if [ "$2" = "all" ]; then
-                TAGETS="$(docker ps -a -q)"
+                TARGETS="$(docker ps -q)"
                 
                 if [ -z "$TARGETS" ]; then
-                    echo "No containers runned"
+                    echo "No active containers"
                 else
-                    docker stop $TAGETS
+                    docker stop ${TARGETS}
                 fi
             else
                 docker stop $2
@@ -167,12 +169,12 @@ d() {
             ;;
         "rm")
             if [ "$2" = "all" ]; then
-                TAGETS="$(docker ps -a -q)"
+                TARGETS="$(docker ps -a -q)"
                 
                 if [ -z "$TARGETS" ]; then
-                    echo "No containers runned"
+                    echo "No containers found"
                 else
-                    docker rm $TAGETS
+                    docker rm ${TARGETS}
                 fi
             else
                 docker rm $2
@@ -183,13 +185,13 @@ d() {
             ;;
         "destroy")
             if [ "$2" = "all" ]; then
-                TAGETS="$(docker ps -a -q)"
+                TARGETS="$(docker ps -a -q)"
                 
                 if [ -z "$TARGETS" ]; then
-                    echo "No containers runned"
+                    echo "No containers found"
                 else
-                    docker stop $TAGETS
-                    docker rm $TAGETS
+                    docker stop ${TARGETS}
+                    docker rm ${TARGETS}
                 fi
             else
                 docker stop $2
