@@ -19,7 +19,7 @@ aiconf() {
 
     case "$1" in
         "update")
-            git pull | grep '|'
+            git pull | grep '|\|Already'
             ;;
         "save")
             git add -A 
