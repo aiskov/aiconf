@@ -23,6 +23,8 @@ aiconf() {
             ;;
         *)
             echo "Incorrect command: $@"    
+            ;;
+    esac
 }
 
 # Navigation
