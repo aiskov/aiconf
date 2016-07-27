@@ -2,6 +2,14 @@
 
 echo "AI Conf loaded"
 
+echo '   _____  .___  _________                _____ '
+echo '  /  _  \ |   | \_   ___ \  ____   _____/ ____\'
+echo ' /  /_\  \|   | /    \  \/ /  _ \ /    \   __\ '
+echo '/    |    \   | \     \___(  <_> )   |  \  |   '
+echo '\____|__  /___|  \______  /\____/|___|  /__|   '
+echo '        \/              \/            \/       '
+
+
 # Locations
 export ANDROID_HOME=/Users/aiskov/Library/Android/sdk
 [[ -d "$ANDROID_HOME" ]] &&  export PATH="$PATH:$ANDROID_HOME/platform-tools"
