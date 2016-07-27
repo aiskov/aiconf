@@ -3,6 +3,9 @@
 echo "AI Conf loaded"
 
 # Locations
+export ANDROID_HOME=/Users/aiskov/Library/Android/sdk
+[[ -d "$ANDROID_HOME" ]] &&  export PATH="$PATH:$ANDROID_HOME/platform-tools"
+
 export DEV_DIR="$HOME/Development"
 export VM_DIR="$HOME/VM"
 export AI_CONF_DIR="$DEV_DIR/aiconf"
