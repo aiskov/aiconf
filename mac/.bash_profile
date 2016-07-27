@@ -114,7 +114,13 @@ d() {
     case "$1" in
         "stop")
             if [ "$2" = "all" ]; then
-                docker stop $(docker ps -a -q)
+                TAGETS="$(docker ps -a -q)"
+                
+                if [ -z "$TARGETS" ]; then
+                    else "No containers runned"
+                else
+                    docker stop $TAGETS
+                fi
             else
                 docker stop $2
             fi
