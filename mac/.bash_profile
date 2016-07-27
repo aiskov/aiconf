@@ -181,7 +181,7 @@ d() {
         "bash")
             docker exec -it $2 /bin/bash
             ;;
-        "destroy"
+        "destroy")
             if [ "$2" = "all" ]; then
                 TAGETS="$(docker ps -a -q)"
                 
