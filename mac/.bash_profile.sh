@@ -115,7 +115,14 @@ export DOCKER_HOST=unix:///var/run/docker.sock
 d() {
     case "$1" in
         "ps")
-            docker ps -a
+            case $2 in
+                "stopped")
+                    docker ps -f "status=exited"
+                    ;;
+                *)
+                    docker ps ${@:2}
+                    ;;
+            esac
             ;;
         "img")
             docker images
@@ -130,29 +137,29 @@ d() {
                     docker rmi ${TARGETS}
                 fi
             else
-                docker rmi $2
+                docker rmi ${@:2}
             fi
             ;;
         "pull")
-            docker pull $2
+            docker pull ${@:2}
             ;;
         "push")
-            docker push $2
+            docker push ${@:2}
             ;;
         "build")
-            docker build -t $2
+            docker build -t ${@:2}
             ;;
         "daemon")
-            docker run -d --net=host $2
+            docker run -d --net=host ${@:2}
             ;;
         "attach")
-            docker attach $2
+            docker attach ${@:2}
             ;;
         "log")
-            docker log $2
+            docker log ${@:2}
             ;;
         "run")
-            docker run -t -i --net=host $2
+            docker run -t -i --net=host ${@:2}
             ;;
         "stop")
             if [ "$2" = "all" ]; then
@@ -164,7 +171,7 @@ d() {
                     docker stop ${TARGETS}
                 fi
             else
-                docker stop $2
+                docker stop ${@:2}
             fi
             ;;
         "rm")
@@ -177,11 +184,11 @@ d() {
                     docker rm ${TARGETS}
                 fi
             else
-                docker rm $2
+                docker rm ${@:2}
             fi
             ;;
         "bash")
-            docker exec -it $2 /bin/bash
+            docker exec -it $2 /bin/bash ${@:3}
             ;;
         "destroy")
             if [ "$2" = "all" ]; then
