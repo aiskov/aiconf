@@ -19,7 +19,12 @@ aiconf() {
 
     case "$1" in
         "update")
-            git pull
+            git pull | grep '|'
+            ;;
+        "save")
+            git add -A 
+            git commit -m"Save changes"
+            git push origin
             ;;
         *)
             echo "Incorrect command: $@"    
