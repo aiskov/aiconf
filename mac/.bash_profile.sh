@@ -139,6 +139,9 @@ d() {
     case "$1" in
         "ps")
             case $2 in
+                "--names")
+                    docker ps --format '{{.Names}}'
+                    ;;
                 "stopped")
                     docker ps -f "status=exited"
                     ;;
@@ -226,6 +229,19 @@ d() {
             else
                 docker stop $2
                 docker rm $2
+            fi
+            ;;
+        "stats")
+            if [ "$2" = "" ]; then
+                TARGETS="$(d ps --names)"
+
+                if [ -z "$TARGETS" ]; then
+                    echo "No active containers found"
+                else
+                    docker stats ${TARGETS}
+                fi
+            else
+                docker stats $2
             fi
             ;;
         *)
