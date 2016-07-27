@@ -11,6 +11,7 @@ brew install icdiff
 brew install ffmpeg
 brew install p7zip
 brew install HTTPie
+brew install gnupg
 
 brew install ansible
 
