@@ -25,6 +25,8 @@ aiconf() {
             echo "Incorrect command: $@"    
             ;;
     esac
+    
+    cd - >> /dev/null
 }
 
 # Navigation
