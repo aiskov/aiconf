@@ -18,6 +18,8 @@ export MYSQL_VM="$VM_DIR/mysql"
 
 export SDKMAN_DIR="$HOME/.sdkman"
 
+export BREW_PREFIX="$(brew --prefix)"
+
 # Configuration management
 aiconf() {
     cd ${AI_CONF_DIR}
@@ -53,7 +55,7 @@ to() {
         "vm")
             cd $VM_DIR
             ;;
-        "vm")
+        "log")
             cd $LOG_DIR
             ;;
         *)
@@ -263,3 +265,9 @@ alias wifi_off="networksetup -setairportpower airport off"
 
 # SDKMan
 [[ -d "$SDKMAN_DIR" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
+
+# Additional completion
+[ -f ${BREW_PREFIX}/etc/bash_completion ] && . ${BREW_PREFIX}/etc/bash_completion
+
+# Load autoconfig
+. $AI_CONF_DIR/mac/autocomplete.sh

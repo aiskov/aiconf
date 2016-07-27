@@ -13,6 +13,8 @@ brew install p7zip
 brew install HTTPie
 brew install gnupg
 
+brew install bash-completion
+
 brew install ansible
 
 # Install java 
@@ -32,3 +34,10 @@ sdk install gradle
 
 # Generate keys
 ssh-keygen -t rsa
+
+# Install bash_profile
+mkdir -p /Development/aiconf
+git clone git@github.com:aiskov/aiconf.git ~/Development/aiconf
+
+rm ~/.bash_profile || true
+ln -s ~/Development/aiconf/mac/.bash_profile.sh ~/.bash_profile
