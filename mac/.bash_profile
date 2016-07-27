@@ -112,6 +112,15 @@ export DOCKER_HOST=unix:///var/run/docker.sock
 
 d() {
     case "$1" in
+        "ps")
+            docker ps -a
+            ;;
+        "img")
+            docker images
+            ;;
+        "rmi")
+            docker rmi $2
+            ;;
         "stop")
             if [ "$2" = "all" ]; then
                 TAGETS="$(docker ps -a -q)"
@@ -138,9 +147,8 @@ d() {
     esac        
 }
 
-alias d_ps="docker ps -a"
-alias d_img="docker images"
-alias d_img_rm="docker rmi"
+
+
 alias d_pull="docker pull"
 alias d_push="docker push"
 alias d_build="docker build -t"
