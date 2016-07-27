@@ -113,17 +113,17 @@ export DOCKER_HOST=unix:///var/run/docker.sock
 d() {
     case "$1" in
         "stop")
-            if [ "$1" = "all" ]; then
+            if [ "$2" = "all" ]; then
                 docker stop $(docker ps -a -q)
             else
-                docker stop $1
+                docker stop $2
             fi
             ;;
         "rm")
-            if [ "$1" = "all" ]; then
+            if [ "$2" = "all" ]; then
                 docker rm $(docker ps -a -q)
             else
-                docker rm $1
+                docker rm $2
             fi
             ;;
         *)
