@@ -1,16 +1,29 @@
 #!/bin/bash
 
 # Loactaions
-export DEV_DIR="$HOME/Development/"
-export VM_DIR="$HOME/VM/"
+export DEV_DIR="$HOME/Development"
+export VM_DIR="$HOME/VM"
+export AI_CONF_DIR="$DEV_DIR/aiconf"
 
-export LOG_DIR="/var/log/"
+export LOG_DIR="/var/log"
 
-export MONGO_VM="$VM_DIR/mongodb/"
-export MARIA_VM="$VM_DIR/mariadb/"
-export MYSQL_VM="$VM_DIR/mysql/"
+export MONGO_VM="$VM_DIR/mongodb"
+export MARIA_VM="$VM_DIR/mariadb"
+export MYSQL_VM="$VM_DIR/mysql"
 
 export SDKMAN_DIR="$HOME/.sdkman"
+
+# Configuration management
+aiconf() {
+    cd $AI_CONF_DIR
+
+    case "$1" in
+        "update")
+            git pull
+            ;;
+        *)
+            echo "Incorrect command: $@"    
+}
 
 # Navigation
 alias to_dev="cd $DEV_DIR"
