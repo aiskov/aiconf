@@ -121,6 +121,27 @@ d() {
         "rmi")
             docker rmi $2
             ;;
+        "pull")
+            docker pull $2
+            ;;
+        "push")
+            docker push $2
+            ;;
+        "build")
+            docker build -t $2
+            ;;
+        "deamon")
+            docker run -d --net=host $2
+            ;;
+        "attach")
+            docker attach $2
+            ;;
+        "log")
+            docker log $2
+            ;;
+        "run")
+            docker run -t -i --net=host $2
+            ;;
         "stop")
             if [ "$2" = "all" ]; then
                 TAGETS="$(docker ps -a -q)"
@@ -136,8 +157,32 @@ d() {
             ;;
         "rm")
             if [ "$2" = "all" ]; then
-                docker rm $(docker ps -a -q)
+                TAGETS="$(docker ps -a -q)"
+                
+                if [ -z "$TARGETS" ]; then
+                    echo "No containers runned"
+                else
+                    docker rm $TAGETS
+                fi
             else
+                docker rm $2
+            fi
+            ;;
+        "bash")
+            docker exec -it $2 /bin/bash
+            ;;
+        "destroy"
+            if [ "$2" = "all" ]; then
+                TAGETS="$(docker ps -a -q)"
+                
+                if [ -z "$TARGETS" ]; then
+                    echo "No containers runned"
+                else
+                    docker stop $TAGETS
+                    docker rm $TAGETS
+                fi
+            else
+                docker stop $2
                 docker rm $2
             fi
             ;;
@@ -145,26 +190,6 @@ d() {
             echo "Incorrect d command: $@"    
             ;;
     esac        
-}
-
-
-
-alias d_pull="docker pull"
-alias d_push="docker push"
-alias d_build="docker build -t"
-alias d_run="docker run -t -i --net=host"
-alias d_stop="docker stop"
-alias d_deamon="docker run -d --net=host"
-alias d_attach="docker attach"
-alias d_log="docker log"
-
-function d_bash {
-    docker exec -it $1 /bin/bash
-}
-
-function d_destroy {
-    docker stop $1
-    docker rm $1
 }
 
 alias d_rm_stopped='docker rm $(docker ps -a -q)'
