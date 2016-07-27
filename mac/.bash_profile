@@ -98,17 +98,39 @@ mysql() {
 alias mvn_proxy_on="mv ~/.m2/settings.xml.tmp ~/.m2/settings.xml"
 alias mvn_proxy_off="mv ~/.m2/settings.xml ~/.m2/settings.xml.tmp"
 
-function sublime {
+sublime() {
     nohup /Applications/"Sublime Text.app"/Contents/MacOS/"Sublime Text" $1 2> /dev/null
 }
 
 # Media
-function mov2mp4 {
+mov2mp4() {
     ffmpeg -i $1 -vcodec h264 -acodec aac -strict -2 $2
 }
 
 # Work with docker
 export DOCKER_HOST=unix:///var/run/docker.sock
+
+d() {
+    case "$1" in
+        "stop")
+            if [ "$1" = "all" ]; then
+                docker stop $(docker ps -a -q)
+            else
+                docker stop $1
+            fi
+            ;;
+        "rm")
+            if [ "$1" = "all" ]; then
+                docker rm $(docker ps -a -q)
+            else
+                docker rm $1
+            fi
+            ;;
+        *)
+            echo "Incorrect d command: $@"    
+            ;;
+    esac        
+}
 
 alias d_ps="docker ps -a"
 alias d_img="docker images"
