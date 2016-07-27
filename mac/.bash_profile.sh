@@ -37,9 +37,22 @@ aiconf() {
 }
 
 # Navigation
-alias to_dev="cd $DEV_DIR"
-alias to_vm="cd $VM_DIR"
-alias to_log="cd $LOG_DIR"
+to() {
+    case "$1" in
+        "dev")
+            cd $DEV_DIR
+            ;;
+        "vm")
+            cd $VM_DIR
+            ;;
+        "vm")
+            cd $LOG_DIR
+            ;;
+        *)
+            cd
+            ;;
+    esac
+}
 
 # Generic VM manager
 vm() {
@@ -210,8 +223,6 @@ d() {
             ;;
     esac        
 }
-
-alias d_rm_stopped='docker rm $(docker ps -a -q)'
 
 # Work with proc
 alias is_runned="ps aux | grep -v grep | grep"
