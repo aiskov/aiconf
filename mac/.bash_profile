@@ -117,7 +117,7 @@ d() {
                 TAGETS="$(docker ps -a -q)"
                 
                 if [ -z "$TARGETS" ]; then
-                    else "No containers runned"
+                    echo "No containers runned"
                 else
                     docker stop $TAGETS
                 fi
