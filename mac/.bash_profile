@@ -119,7 +119,17 @@ d() {
             docker images
             ;;
         "rmi")
-            docker rmi $2
+            if [ "$2" = "untagged" ]; then
+                TAGETS="$(docker images | grep '"'"'^<none>'"'"' | awk '"'"'{print $3}'"'"')"
+                
+                if [ -z "$TARGETS" ]; then
+                    echo "No containers runned"
+                else
+                    docker rmi $TAGETS
+                fi
+            else
+                docker rmi $2
+            fi
             ;;
         "pull")
             docker pull $2
@@ -193,7 +203,6 @@ d() {
 }
 
 alias d_rm_stopped='docker rm $(docker ps -a -q)'
-alias d_rm_untagged='docker rmi $(docker images | grep '"'"'^<none>'"'"' | awk '"'"'{print $3}'"'"') > /dev/null'
 
 # Work with proc
 alias is_runned="ps aux | grep -v grep | grep"
