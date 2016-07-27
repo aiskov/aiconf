@@ -25,6 +25,8 @@ aiconf() {
     case "$1" in
         "update")
             git pull | grep '|\|Already'
+            echo "Reloading AI Conf"
+            . ~/.bash_profile
             ;;
         "save")
             git add -A 
