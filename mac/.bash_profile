@@ -27,7 +27,7 @@ aiconf() {
             git push origin
             ;;
         *)
-            echo "Incorrect command: $@"    
+            echo "Incorrect aiconf command: $@"    
             ;;
     esac
     
