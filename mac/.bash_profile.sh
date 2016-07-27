@@ -1,14 +1,11 @@
 #!/bin/bash
 
-echo "AI Conf loaded"
-
 echo '   _____  .___  _________                _____ '
 echo '  /  _  \ |   | \_   ___ \  ____   _____/ ____\'
 echo ' /  /_\  \|   | /    \  \/ /  _ \ /    \   __\ '
 echo '/    |    \   | \     \___(  <_> )   |  \  |   '
 echo '\____|__  /___|  \______  /\____/|___|  /__|   '
 echo '        \/              \/            \/       '
-
 
 # Locations
 export ANDROID_HOME=/Users/aiskov/Library/Android/sdk
@@ -38,7 +35,6 @@ aiconf() {
             aiconf reload
             ;;
         "reload")
-            echo "Reloading AI Conf"
             . ~/.bash_profile
             ;;
         "save")
@@ -52,6 +48,19 @@ aiconf() {
     esac
     
     cd - >> /dev/null
+}
+
+# Utils
+containsElement() {
+  local e
+  for e in "${2}"; do [[ "$e" == "$1" ]] && return 0; done
+  return 1
+}
+
+join() {
+    local IFS="$1"
+    shift
+    echo "$*"
 }
 
 # Navigation
@@ -73,20 +82,25 @@ to() {
 }
 
 # Generic VM manager
+which vagrant &> /dev/null &&
 vm() {
-    if [ ! -f "$1"/Vagrantfile ]; then
-        echo "No Vagrant VM found in directory $1"
+    local dir=${2:-.}
+    if [ ! -f "$dir"/Vagrantfile ]; then
+        echo "No Vagrant VM found in directory $dir"
         return 1
     fi
 
-    cd $1
+    cd ${dir}
 
-    case "$2" in
+    case "$1" in
         "up")
             vagrant up || true
             ;;
         "down")
             vagrant halt || true
+            ;;
+        "status")
+            vagrant status || true
             ;;
         "reload")
             vagrant reload || true
@@ -103,10 +117,9 @@ vm() {
     cd - >> /dev/null
 }
 
-# Manage mongo
+which vagrant &> /dev/null &&
 mongo() {
-    if [[ $1 = "restore" ]]
-    then
+    if [[ $1 = "restore" ]]; then
        cd ${MONGO_VM}
        vagrant ssh -c 'cd /vagrant/ && mongorestore > tmp.log' 2> /dev/null || true
        cat tmp.log || true
@@ -117,20 +130,17 @@ mongo() {
     fi
 }
 
-# Manage mariadb
+which vagrant &> /dev/null &&
 maria() {
     vm ${MARIA_VM} $1
 }
 
-# Manage mysql
+which vagrant &> /dev/null &&
 mysql() {
     vm ${MYSQL_VM} $1
 }
 
 # Development
-alias mvn_proxy_on="mv ~/.m2/settings.xml.tmp ~/.m2/settings.xml"
-alias mvn_proxy_off="mv ~/.m2/settings.xml ~/.m2/settings.xml.tmp"
-
 sublime() {
     nohup /Applications/"Sublime Text.app"/Contents/MacOS/"Sublime Text" $1 2> /dev/null
 }
@@ -148,7 +158,7 @@ d() {
         "ps")
             case $2 in
                 "--names")
-                    docker ps --format '{{.Names}}'
+                    docker ps --format '{{.Names}}' ${@:3}
                     ;;
                 "stopped")
                     docker ps -f "status=exited"
@@ -159,7 +169,7 @@ d() {
             esac
             ;;
         "img")
-            docker images
+            docker images ${@:2}
             ;;
         "rmi")
             if [ "$2" = "untagged" ]; then
@@ -184,12 +194,12 @@ d() {
             docker build -t ${@:2}
             ;;
         "daemon")
-            docker run -d --net=host ${@:2}
+            docker daemon ${@:2}
             ;;
         "attach")
             docker attach ${@:2}
             ;;
-        "log")
+        "logs")
             docker log ${@:2}
             ;;
         "run")
@@ -224,21 +234,6 @@ d() {
         "bash")
             docker exec -it $2 /bin/bash ${@:3}
             ;;
-        "destroy")
-            if [ "$2" = "all" ]; then
-                TARGETS="$(docker ps -a -q)"
-                
-                if [ -z "$TARGETS" ]; then
-                    echo "No containers found"
-                else
-                    docker stop ${TARGETS}
-                    docker rm ${TARGETS}
-                fi
-            else
-                docker stop $2
-                docker rm $2
-            fi
-            ;;
         "stats")
             if [ "$2" = "" ]; then
                 TARGETS="$(d ps --names)"
@@ -249,7 +244,7 @@ d() {
                     docker stats ${TARGETS}
                 fi
             else
-                docker stats $2
+                docker stats ${@:2}
             fi
             ;;
         *)
@@ -269,6 +264,7 @@ alias be_awake="caffeinate -u -t"
 alias watch="tail -f"
 alias search="find . -name"
 alias rsearch="find . -regex"
+alias all_dirs="find . -type d -maxdepth 1 | sed \"s/^.\///\""
 
 # Git
 alias git_cancel="git reset --soft HEAD~"
