@@ -176,7 +176,15 @@ d() {
                 TARGETS="$(docker images | grep '"'"'^<none>'"'"' | awk '"'"'{print $3}'"'"')"
                 
                 if [ -z "$TARGETS" ]; then
-                    echo "No containers runned"
+                    echo "No $2 images found"
+                else
+                    docker rmi ${TARGETS}
+                fi
+            elif [ "$2" = "all" ]; then
+                TARGETS="$(docker images -q)"
+
+                if [ -z "$TARGETS" ]; then
+                    echo "No images found"
                 else
                     docker rmi ${TARGETS}
                 fi

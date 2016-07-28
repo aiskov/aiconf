@@ -41,7 +41,7 @@ _d() {
                 COMPREPLY=($(compgen -W '$options' -- "$cur"))
                 ;;
             "rmi")
-                local options=("-f" "--force" "--help" "--no-prune" "untagged")
+                local options=("-f" "--force" "--help" "--no-prune" "untagged" "all")
                 options=$(join ' ' ${options[@]})
                 COMPREPLY=($(compgen -W '$options' -- "$cur"))
                 ;;
