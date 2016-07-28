@@ -235,16 +235,18 @@ d() {
             docker exec -it $2 /bin/bash ${@:3}
             ;;
         "stats")
-            if [ "$2" = "" ]; then
-                TARGETS="$(d ps --names)"
+            TARGETS="$(d ps --names)"
 
-                if [ -z "$TARGETS" ]; then
-                    echo "No active containers found"
-                else
-                    docker stats ${TARGETS}
-                fi
+            if [ -z "$TARGETS" ]; then
+                echo "No active containers found"
             else
-                docker stats ${@:2}
+                if [ "$2" = "" ]; then
+                    docker stats ${TARGETS}
+                elif [[ $2 == --* ]]; then
+                    docker stats ${TARGETS} $2
+                else
+                    docker stats ${@:2}
+                fi
             fi
             ;;
         *)
