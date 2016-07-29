@@ -32,7 +32,7 @@ aiconf() {
     case "$1" in
         "update")
             git pull | grep '|\|Already'
-            aiconf reload
+            . ~/.bash_profile
             ;;
         "reload")
             . ~/.bash_profile
