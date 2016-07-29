@@ -52,19 +52,46 @@ aiconf() {
 }
 
 # Utils
+unset -f containsElement
 containsElement() {
   local e
   for e in "${2}"; do [[ "$e" == "$1" ]] && return 0; done
   return 1
 }
 
+unset -f join
 join() {
     local IFS="$1"
     shift
     echo "$*"
 }
 
+unset -f load_scripts
+load_scripts() {
+    cd $1
+
+    for s in $(ls); do
+        . ${s}
+    done
+
+    cd - &> /dev/null
+}
+
+unset -f all_dirs
+all_dirs() {
+    local target
+    if [ "$1" = "" ]; then
+        target="./"
+    else
+        target="$1/"
+    fi
+
+    local dirs=$(find ${target} -type d -maxdepth 1)
+    echo "$dirs" | sed "s|^$target||g" | sed "s|^/||g" | sed '/^\s*$/d'
+}
+
 # Navigation
+unset -f to
 to() {
     case "$1" in
         "dev")
@@ -84,6 +111,7 @@ to() {
 
 # Generic VM manager
 which vagrant &> /dev/null &&
+unset -f vm &&
 vm() {
     local dir=${2:-.}
     if [ ! -f "$dir"/Vagrantfile ]; then
@@ -119,6 +147,7 @@ vm() {
 }
 
 which vagrant &> /dev/null &&
+unset -f mongo &&
 mongo() {
     if [[ $1 = "restore" ]]; then
        cd ${MONGO_VM}
@@ -132,21 +161,25 @@ mongo() {
 }
 
 which vagrant &> /dev/null &&
+unset -f maria
 maria() {
     vm ${MARIA_VM} $1
 }
 
 which vagrant &> /dev/null &&
+unset -f mysql
 mysql() {
     vm ${MYSQL_VM} $1
 }
 
 # Development
+unset -f sublime
 sublime() {
     nohup /Applications/"Sublime Text.app"/Contents/MacOS/"Sublime Text" $1 2> /dev/null
 }
 
 # Media
+unset -f mov2mp4
 mov2mp4() {
     ffmpeg -i $1 -vcodec h264 -acodec aac -strict -2 $2
 }
@@ -154,6 +187,7 @@ mov2mp4() {
 # Work with docker
 export DOCKER_HOST=unix:///var/run/docker.sock
 
+unset -f d
 d() {
     case "$1" in
         "ps")
@@ -279,19 +313,6 @@ alias watch="tail -f"
 alias search="find . -name"
 alias rsearch="find . -regex"
 
-unset -f all_dirs
-all_dirs() {
-    local target
-    if [ "$1" = "" ]; then
-        target="./"
-    else
-        target="$1/"
-    fi
-
-    local dirs=$(find ${target} -type d -maxdepth 1)
-    echo "$dirs" | sed "s|^$target||g" | sed "s|^/||g" | sed '/^\s*$/d'
-}
-
 # Git
 alias git_cancel="git reset --soft HEAD~"
 
@@ -319,16 +340,5 @@ alias wifi_off="networksetup -setairportpower airport off"
 . $AI_CONF_DIR/mac/autocomplete.sh
 
 # Load machine specific configs
-[ ! -d "~/.bash_profile.d" ] && mkdir ~/.bash_profile.d
-
-load_scripts() {
-    cd $1
-
-    for s in $(ls); do
-        . ${s}
-    done
-
-    cd - &> /dev/null
-}
-
+[ ! -d ~/.bash_profile.d ] && mkdir ~/.bash_profile.d
 load_scripts ~/.bash_profile.d

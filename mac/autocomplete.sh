@@ -1,5 +1,6 @@
 #!/bin/bash
 
+unset -f _aiconf
 _aiconf() {
     local cur
     _get_comp_words_by_ref cur
@@ -9,6 +10,7 @@ _aiconf() {
 }
 complete -F _aiconf -o default aiconf
 
+unset -f _to
 _to() {
     local cur
     _get_comp_words_by_ref cur
@@ -18,6 +20,7 @@ _to() {
 }
 complete -F _to -o default to
 
+unset -f _d
 _d() {
     local cur=${COMP_WORDS[COMP_CWORD]}
     local prev=${COMP_WORDS[COMP_CWORD-1]}
@@ -131,6 +134,7 @@ _d() {
 }
 complete -F _d -o default d
 
+unset -f _vm
 _vm() {
     local cur=${COMP_WORDS[COMP_CWORD]}
     local prev=${COMP_WORDS[COMP_CWORD-1]}
