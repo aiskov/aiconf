@@ -319,7 +319,7 @@ alias wifi_off="networksetup -setairportpower airport off"
 . $AI_CONF_DIR/mac/autocomplete.sh
 
 # Load machine specific configs
-[ ! -d "~/.bash_profile.d" ] || mkdir ~/.bash_profile.d
+[ ! -d "~/.bash_profile.d" ] && mkdir ~/.bash_profile.d
 
 load_scripts() {
     cd $1
