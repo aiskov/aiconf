@@ -27,6 +27,7 @@ export BREW_PREFIX="$(brew --prefix)"
 
 # Configuration management
 aiconf() {
+    local _cur_dir=$(pwd)
     cd ${AI_CONF_DIR}
 
     case "$1" in
@@ -47,7 +48,7 @@ aiconf() {
             ;;
     esac
     
-    cd - >> /dev/null
+    cd ${_cur_dir} &> /dev/null
 }
 
 # Utils
