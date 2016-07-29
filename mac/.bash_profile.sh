@@ -160,6 +160,9 @@ d() {
                 "--names")
                     docker ps --format '{{.Names}}' ${@:3}
                     ;;
+                "--short")
+                    docker ps --format 'table {{.Image}}\t{{.Names}}\t{{.Status}}' ${@:3}
+                    ;;
                 "stopped")
                     docker ps -f "status=exited"
                     ;;

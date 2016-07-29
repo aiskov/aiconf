@@ -31,7 +31,7 @@ _d() {
         case "$prev" in
             "ps")
                 local options=("-a" "--all" "-f" "--filter" "--format" "--help" "-n" "--last" "-l" "--latest"
-                               "--no-trunc" "-q" "--quiet" "-s" "--size --names stopped")
+                               "--no-trunc" "-q" "--quiet" "-s" "--size --names --short stopped")
                 options=$(join ' ' ${options[@]})
                 COMPREPLY=($(compgen -W '$options' -- "$cur"))
                 ;;
