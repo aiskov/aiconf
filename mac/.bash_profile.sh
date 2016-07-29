@@ -274,7 +274,19 @@ alias be_awake="caffeinate -u -t"
 alias watch="tail -f"
 alias search="find . -name"
 alias rsearch="find . -regex"
-alias all_dirs="find . -type d -maxdepth 1 | sed \"s/^.\///\""
+
+unset -f all_dirs
+all_dirs() {
+    local target
+    if [ "$1" = "" ]; then
+        target="./"
+    else
+        target="$1/"
+    fi
+
+    local dirs=$(find ${target} -type d -maxdepth 1)
+    echo "$dirs" | sed "s|^$target||g" | sed "s|^/||g" | sed '/^\s*$/d'
+}
 
 # Git
 alias git_cancel="git reset --soft HEAD~"
@@ -291,13 +303,28 @@ alias wifi_on="networksetup -setairportpower airport on"
 alias wifi_off="networksetup -setairportpower airport off"
 
 # Provisioning
-[[ -d "$DEV_DIR/jiss-provision" ]] && . "$DEV_DIR/jiss-provision/aliases.sh"
+[ -d "$DEV_DIR/jiss-provision" ] && . "$DEV_DIR/jiss-provision/aliases.sh"
 
 # SDKMan
-[[ -d "$SDKMAN_DIR" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
+[ -d "$SDKMAN_DIR" ] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
 
 # Additional completion
 [ -f ${BREW_PREFIX}/etc/bash_completion ] && . ${BREW_PREFIX}/etc/bash_completion
 
 # Load autoconfig
 . $AI_CONF_DIR/mac/autocomplete.sh
+
+# Load machine specific configs
+[ ! -d "~/.bash_profile.d" ] || mkdir ~/.bash_profile.d
+
+load_scripts() {
+    cd $1
+
+    for s in $(ls); do
+        . ${s}
+    done
+
+    cd - &> /dev/null
+}
+
+load_scripts ~/.bash_profile.d
