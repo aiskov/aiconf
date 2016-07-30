@@ -156,20 +156,20 @@ mongo() {
        rm tmp.log || true
        cd - >> /dev/null
     else
-        vm ${MONGO_VM} $1
+        vm $1 ${MONGO_VM}
     fi
 }
 
 which vagrant &> /dev/null &&
 unset -f maria
 maria() {
-    vm ${MARIA_VM} $1
+    vm $1 ${MARIA_VM}
 }
 
 which vagrant &> /dev/null &&
 unset -f mysql
 mysql() {
-    vm ${MYSQL_VM} $1
+    vm $1 ${MYSQL_VM}
 }
 
 # Development
