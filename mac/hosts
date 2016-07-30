@@ -1,0 +1,5 @@
+# BEGIN section for AIConf sites
+127.0.0.1       mongodb
+127.0.0.1       mariadb
+127.0.0.1       mysql
+# END section for AIConf sites
