@@ -111,7 +111,7 @@ _d() {
                 ;;
             "rm")
                 local names=$(d ps --names -a | tr '\n' ' ')
-                local options=("-f" "--force" "-l" "--link" "-v" "--volumes" "all")
+                local options=("-f" "--force" "-l" "--link" "-v" "--volumes" "all" "stopped")
                 options=$(join ' ' ${options[@]})
                 COMPREPLY=($(compgen -W '$names $options' -- "$cur"))
                 ;;

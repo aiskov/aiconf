@@ -89,6 +89,14 @@ d() {
                 else
                     docker rm ${TARGETS}
                 fi
+            elif [ "$2" = "stopped" ]; then
+                TARGETS="$(docker ps --filter "status=exited" -q)"
+
+                if [ -z "$TARGETS" ]; then
+                    echo "No containers found"
+                else
+                    docker rm ${TARGETS}
+                fi
             else
                 docker rm ${@:2}
             fi
