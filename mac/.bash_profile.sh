@@ -40,7 +40,7 @@ aiconf() {
             ;;
         "save")
             git add -A 
-            git commit -m"Save changes"
+            git commit -m"[AUTO] Save changes"
             git push origin
             ;;
         *)

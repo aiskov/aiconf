@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Exit
+# Exit if script
 [ -z "$PS1" ] && return
 
 # Config history
@@ -58,3 +58,55 @@ xterm*|rxvt*)
 *)
     ;;
 esac
+
+echo '   _____  .___  _________                _____ '
+echo '  /  _  \ |   | \_   ___ \  ____   _____/ ____\'
+echo ' /  /_\  \|   | /    \  \/ /  _ \ /    \   __\ '
+echo '/    |    \   | \     \___(  <_> )   |  \  |   '
+echo '\____|__  /___|  \______  /\____/|___|  /__|   '
+echo '        \/              \/            \/       '
+
+# Locations
+# TODO: export ANDROID_HOME=/home/aiskov/<FIX-ME>/Android/sdk
+# TODO: uncomment [[ -d "$ANDROID_HOME" ]] &&  export PATH="$PATH:$ANDROID_HOME/platform-tools"
+
+export DEV_DIR="$HOME/Development"
+export VM_DIR="$HOME/VM"
+export AI_CONF_DIR="$DEV_DIR/aiconf"
+
+export LOG_DIR="/var/log"
+
+export MONGO_VM="$VM_DIR/mongodb"
+export MARIA_VM="$VM_DIR/mariadb"
+export MYSQL_VM="$VM_DIR/mysql"
+
+export SDKMAN_DIR="$HOME/.sdkman"
+
+export BREW_PREFIX="$(brew --prefix)"
+
+# Configuration management
+aiconf() {
+    local _cur_dir=$(pwd)
+    cd ${AI_CONF_DIR}
+
+    case "$1" in
+        "update")
+            git pull | grep '|\|Already'
+            . ~/.bashrc
+            ;;
+        "reload")
+            . ~/.bashrc
+            ;;
+        "save")
+            git add -A
+            git commit -m"[AUTO] Save changes"
+            git push origin
+            ;;
+        *)
+            echo "Incorrect aiconf command: $@"
+            ;;
+    esac
+
+    cd ${_cur_dir} &> /dev/null
+}
+
