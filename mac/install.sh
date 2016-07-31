@@ -32,6 +32,13 @@ sdk install maven
 sdk install sbt
 sdk install gradle
 
+# Install python tools
+sudo easy_install-3.5 pip
+sudo easy_install pip
+
+sudo pip install virtualenv
+sudo pip install virtualenvwrapper
+
 # Generate keys
 ssh-keygen -t rsa
 
