@@ -59,10 +59,41 @@ xterm*|rxvt*)
     ;;
 esac
 
-export AI_CONF_DIR="$HOME/Development/aiconf"
+echo '   _____  .___  _________                _____ '
+echo '  /  _  \ |   | \_   ___ \  ____   _____/ ____\'
+echo ' /  /_\  \|   | /    \  \/ /  _ \ /    \   __\ '
+echo '/    |    \   | \     \___(  <_> )   |  \  |   '
+echo '\____|__  /___|  \______  /\____/|___|  /__|   '
+echo '        \/              \/            \/       '
 
-. ${AI_CONF_DIR}/shared/init.sh
-. ${AI_CONF_DIR}/shared/utils.sh
-. ${AI_CONF_DIR}/shared/vm.sh
-. ${AI_CONF_DIR}/shared/dev.sh
-. ${AI_CONF_DIR}/shared/docker.sh
+# Locations
+export AI_CONF_DIR="$DEV_DIR/aiconf"
+
+export LOG_DIR="/var/log"
+
+# Configuration management
+aiconf() {
+    local _cur_dir=$(pwd)
+    cd ${AI_CONF_DIR}
+
+    case "$1" in
+        "update")
+            git pull | grep '|\|Already'
+            . ~/.bashrc
+            ;;
+        "reload")
+            . ~/.bashrc
+            ;;
+        "save")
+            git add -A
+            git commit -m"[AUTO] Save changes"
+            git push origin
+            ;;
+        *)
+            echo "Incorrect aiconf command: $@"
+            ;;
+    esac
+
+    cd ${_cur_dir} &> /dev/null
+}
+
