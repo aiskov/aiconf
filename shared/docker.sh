@@ -221,8 +221,8 @@ _d() {
                 COMPREPLY=($(compgen -W '$names $options' -- "$cur"))
                 ;;
             "bash")
-                local names=$(d ps --names -a | tr '\n' ' ')
-                COMPREPLY=($(compgen -W '$options' -- "$cur"))
+                local names=$(d ps --names | tr '\n' ' ')
+                COMPREPLY=($(compgen -W '$names' -- "$cur"))
                 ;;
             "stats")
                 local names=$(d ps --names -a | tr '\n' ' ')
