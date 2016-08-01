@@ -48,6 +48,12 @@ alias cpu_top="ps wwaxr -o pid,%cpu,command | head -5"
 alias ttop="top -R -F -s 10 -o rsize"
 alias be_awake="caffeinate -u -t"
 
+# Work with date
+alias aid_week='date +%V'
+alias aid_date='date "+%Y-%m-%d"'
+alias aid_time='date "+%H:%M:%S"'
+alias aid_date_time='date "+%Y-%m-%dT%H:%M:%S"'
+
 # Work with files
 alias watch="tail -f"
 alias search="find . -name"
