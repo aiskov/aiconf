@@ -3,6 +3,16 @@
 export LOG_DIR="/var/log"
 
 # Utils
+do_times() {
+    local i="0"
+
+    while [ $i -lt ${2:-3} ]; do
+        $1
+        sleep ${3:-1}
+        i=$[$i+1]
+    done
+}
+
 unset -f containsElement
 containsElement() {
   local e
