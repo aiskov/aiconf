@@ -16,6 +16,10 @@ mov2mp4() {
     ffmpeg -i $1 -vcodec h264 -acodec aac -strict -2 $2
 }
 
+alias kill_firefox="killall firefox"
+alias kill_chrome="killall 'Google Chrome Helper' && killall 'Google Chrome'"
+alias kill_safari="killall Safari && killall SafariCloudHistoryPushAgent && killall com.apple.Safari.ImageDecoder"
+
 # Provisioning
 [ -d "$DEV_DIR/jiss-provision" ] && . "$DEV_DIR/jiss-provision/aliases.sh"
 
