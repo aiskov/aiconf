@@ -132,7 +132,7 @@ _d() {
 
     if [ $COMP_CWORD -eq 1 ]; then
         local options=("ps" "img" "rmi" "pull" "push" "build" "daemon" "attach" "logs" "run" "stop"
-                       "rm" "bash" "destroy" "stats")
+                       "rm" "bash" "stats")
         options=$(join ' ' ${options[@]})
         COMPREPLY=($(compgen -W '$options' -- "$cur"))
     elif [ $COMP_CWORD -ge 2 ]; then
