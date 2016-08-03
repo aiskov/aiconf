@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
 # Work with docker
-export DOCKER_HOST=unix:///var/run/docker.sock
+if [ $OSTYPE == "linux-gnu" ]; then
+    # export DOCKER_HOST=""
+else
+    export DOCKER_HOST=unix:///var/run/docker.sock
+fi
 
 unset -f d
 d() {
