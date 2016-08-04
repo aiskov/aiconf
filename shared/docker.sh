@@ -62,7 +62,7 @@ d() {
             docker attach ${@:2}
             ;;
         "logs")
-            docker logs ${@:2}
+            docker logs ${@:2} 2>&1 | less
             ;;
         "run")
             docker run -t -i --net=host ${@:2}
