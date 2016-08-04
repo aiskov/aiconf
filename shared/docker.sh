@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
 # Work with docker
-export DOCKER_HOST=unix:///var/run/docker.sock
+if [ $OSTYPE == "linux-gnu" ]; then
+    # export DOCKER_HOST=""
+else
+    export DOCKER_HOST=unix:///var/run/docker.sock
+fi
 
 unset -f d
 d() {
@@ -132,7 +136,7 @@ _d() {
 
     if [ $COMP_CWORD -eq 1 ]; then
         local options=("ps" "img" "rmi" "pull" "push" "build" "daemon" "attach" "logs" "run" "stop"
-                       "rm" "bash" "destroy" "stats")
+                       "rm" "bash" "stats")
         options=$(join ' ' ${options[@]})
         COMPREPLY=($(compgen -W '$options' -- "$cur"))
     elif [ $COMP_CWORD -ge 2 ]; then
