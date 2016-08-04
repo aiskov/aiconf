@@ -2,6 +2,7 @@
 
 # Work with docker
 if [ $OSTYPE == "linux-gnu" ]; then
+    echo "Docker host: $DOCKER_HOST"
     # export DOCKER_HOST=""
 else
     export DOCKER_HOST=unix:///var/run/docker.sock
