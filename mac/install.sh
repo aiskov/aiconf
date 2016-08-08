@@ -39,6 +39,16 @@ sudo easy_install pip
 sudo pip install virtualenv
 sudo pip install virtualenvwrapper
 
+sudo pip install pymongo
+sudo pip install cassandra-driver
+sudo pip install requests
+sudo pip install execsql
+
+sudo pip3 install pymongo
+sudo pip3 install cassandra-driver
+sudo pip3 install requests
+sudo pip3 install execsql
+
 # Generate keys
 ssh-keygen -t rsa
 
