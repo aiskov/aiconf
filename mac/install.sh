@@ -15,6 +15,10 @@ brew install gnupg
 
 brew install bash-completion
 
+brew cask
+brew cask install virtualbox
+brew cask install virtualbox-extension-pack
+
 brew install ansible
 
 # Install java 
