@@ -29,7 +29,13 @@ brew cask install robomongo
 
 brew cask install libreoffice
 brew cask install vlc
+brew cask install spotify
 brew cask install gimp
+brew cask install skitch
+brew cask install pixlr
+
+brew cask install slack
+brew cask install skype
 
 brew install ansible
 
