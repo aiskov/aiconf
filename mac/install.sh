@@ -19,6 +19,10 @@ brew cask
 brew cask install virtualbox
 brew cask install virtualbox-extension-pack
 
+brew cask install soapui
+brew cask install robomongo
+
+
 brew install ansible
 
 # Install java 
@@ -34,6 +38,7 @@ sdk install scala
 sdk install groovy
 sdk install maven
 sdk install sbt
+sdk install ant
 sdk install gradle
 
 # Install python tools
