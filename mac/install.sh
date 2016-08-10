@@ -17,6 +17,7 @@ brew install ssh-copy-id
 brew install bash-completion
 
 brew install jenv
+brew install jmeter
 
 brew cask 
 brew cask install java
