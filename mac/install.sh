@@ -19,6 +19,8 @@ brew install jenv
 
 brew cask 
 brew cask install java
+brew cask install intellij-idea
+brew cask install android-studio
 brew cask install docker
 brew cask install kitematic
 brew cask install virtualbox
