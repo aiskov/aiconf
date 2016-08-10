@@ -15,13 +15,21 @@ brew install gnupg
 
 brew install bash-completion
 
-brew cask
+brew cask 
+
+brew cask install docker
+brew cask install kitematic
 brew cask install virtualbox
 brew cask install virtualbox-extension-pack
 
+brew cask install vagrant
 brew cask install soapui
+brew cask install mysqlworkbench
 brew cask install robomongo
 
+brew cask install libreoffice
+brew cask install vlc
+brew cask install gimp
 
 brew install ansible
 
