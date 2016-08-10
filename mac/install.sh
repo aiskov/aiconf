@@ -15,8 +15,10 @@ brew install gnupg
 
 brew install bash-completion
 
-brew cask 
+brew install jenv
 
+brew cask 
+brew cask install java
 brew cask install docker
 brew cask install kitematic
 brew cask install virtualbox
