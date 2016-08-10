@@ -27,6 +27,7 @@ brew cask install docker
 brew cask install kitematic
 brew cask install virtualbox
 brew cask install virtualbox-extension-pack
+brew cask install visualvm
 
 brew cask install vagrant
 brew cask install soapui
