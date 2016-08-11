@@ -6,6 +6,46 @@ export MONGO_VM="$VM_DIR/mongodb"
 export MARIA_VM="$VM_DIR/mariadb"
 export MYSQL_VM="$VM_DIR/mysql"
 
+unset -f vm &&
+vmbox() {
+    case "$1" in
+        "up")
+            VBoxManage startvm "$2" --type headless
+            ;;
+        "list")
+            VBoxManage list vms
+            ;;
+        "ps")
+            VBoxManage list runningvms
+            ;;
+        "info")
+            VBoxManage showvminfo "$2"
+            ;;
+        "down")
+            vboxmanage controlvm "$2" poweroff soft
+            ;;
+        *)
+            echo "Incorrect command: $@"
+            ;;
+    esac
+}
+_vmbox() {
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    local prev=${COMP_WORDS[COMP_CWORD-1]}
+
+    if [ $COMP_CWORD -eq 1 ]; then
+        local options=("up" "list" "ps" "info" "down")
+        options=$(join ' ' ${options[@]})
+        COMPREPLY=($(compgen -W '$options' -- "$cur"))
+    elif [ "info" == "${prev}" ] || [ "down" == "${prev}" ]; then
+        local dirs=$(VBoxManage list vms | awk -F '"' '{print $2}' | tr '\n' ' ')
+        COMPREPLY=($(compgen -W '$dirs' -- "$cur"))
+    fi
+
+    return 0
+}
+complete -F _vmbox -o default vmbox
+
 # Generic VM manager
 which vagrant &> /dev/null &&
 unset -f vm &&
@@ -68,3 +108,24 @@ unset -f mysql
 mysql() {
     vm $1 ${MYSQL_VM}
 }
+
+unset -f _vm
+_vm() {
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    local prev=${COMP_WORDS[COMP_CWORD-1]}
+
+    if [ $COMP_CWORD -eq 1 ]; then
+        local options=("up" "down" "reload" "rebuild" "status")
+        options=$(join ' ' ${options[@]})
+        COMPREPLY=($(compgen -W '$options' -- "$cur"))
+    else
+        local dirs=$(all_dirs | tr '\n' ' ')
+        COMPREPLY=($(compgen -W '$dirs' -- "$cur"))
+    fi
+
+    return 0
+}
+complete -F _vm -o default vm
+complete -F _vm -o default mongo
+complete -F _vm -o default maria
+complete -F _vm -o default mysql
