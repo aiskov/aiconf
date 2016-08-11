@@ -6,6 +6,7 @@ export MONGO_VM="$VM_DIR/mongodb"
 export MARIA_VM="$VM_DIR/mariadb"
 export MYSQL_VM="$VM_DIR/mysql"
 
+# Managing of virtual box
 unset -f vm &&
 vmbox() {
     case "$1" in
@@ -22,7 +23,19 @@ vmbox() {
             VBoxManage showvminfo "$2"
             ;;
         "down")
-            vboxmanage controlvm "$2" poweroff soft
+            vboxmanage controlvm "$2" acpipowerbutton
+            ;;
+        "pause")
+            vboxmanage controlvm "$2" pause
+            ;;
+        "resume")
+            vboxmanage controlvm "$2" resume
+            ;;
+        "reset")
+            vboxmanage controlvm "$2" reset
+            ;;
+        "drop")
+            vboxmanage controlvm "$2" poweroff
             ;;
         *)
             echo "Incorrect command: $@"
@@ -33,11 +46,14 @@ _vmbox() {
     local cur=${COMP_WORDS[COMP_CWORD]}
     local prev=${COMP_WORDS[COMP_CWORD-1]}
 
+    local per_vm=("down" "pause" "resume" "reset" "drop" "info")
+    local is_per_vm=(containsElement ${per_vm[@]} ${prev})
+
     if [ $COMP_CWORD -eq 1 ]; then
-        local options=("up" "list" "ps" "info" "down")
+        local options=("up" "list" "ps" "info" "down" "pause" "resume" "reset" "drop" "info")
         options=$(join ' ' ${options[@]})
         COMPREPLY=($(compgen -W '$options' -- "$cur"))
-    elif [ "info" == "${prev}" ] || [ "down" == "${prev}" ]; then
+    elif [ ${is_per_vm} ]; then
         local dirs=$(VBoxManage list vms | awk -F '"' '{print $2}' | tr '\n' ' ')
         COMPREPLY=($(compgen -W '$dirs' -- "$cur"))
     fi
