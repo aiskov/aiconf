@@ -43,7 +43,7 @@ brew cask install spotify
 brew cask install gimp
 brew cask install skitch
 brew cask install pixlr
-
+brew brew cask install keystore-explorer
 brew cask install slack
 brew cask install skype
 
