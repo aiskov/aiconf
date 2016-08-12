@@ -16,6 +16,9 @@ key() {
                 keytool -import -trustcacerts -keystore $2 -noprompt -alias ${alias_name} -file $3
             fi
             ;;
+        "verify")
+            openssl x509 -in $2 -text
+            ;;
         "download")
             echo -n | openssl s_client -connect ${2}:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > ${2}.crt
             ;;
@@ -30,7 +33,7 @@ _key() {
     local prev=${COMP_WORDS[COMP_CWORD-1]}
 
     if [ $COMP_CWORD -eq 1 ]; then
-        local options=("add" "download")
+        local options=("add" "download" "verify")
         options=$(join ' ' ${options[@]})
         COMPREPLY=($(compgen -W '$options' -- "$cur"))
     fi
