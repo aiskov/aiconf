@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+echo "This is list of commands not script!"
+exit 0
+
 # Install brew
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
@@ -41,8 +44,8 @@ brew cask install libreoffice
 brew cask install vlc
 brew cask install spotify
 brew cask install gimp
-brew cask install skitch
 brew cask install pixlr
+brew cask install skitch
 brew cask install keystore-explorer
 brew cask install sourcetree
 brew cask install slack
