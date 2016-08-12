@@ -24,3 +24,19 @@ key() {
             ;;
     esac
 }
+
+_key() {
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    local prev=${COMP_WORDS[COMP_CWORD-1]}
+
+    if [ $COMP_CWORD -eq 1 ]; then
+        local options=("add" "download")
+        options=$(join ' ' ${options[@]})
+        COMPREPLY=($(compgen -W '$options' -- "$cur"))
+    fi
+
+    return 0
+}
+complete -F _key -o default key
+
+
