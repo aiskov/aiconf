@@ -10,6 +10,7 @@ export BREW_PREFIX="$(brew --prefix)"
 . ${AI_CONF_DIR}/shared/vagrant.sh
 . ${AI_CONF_DIR}/shared/dev.sh
 . ${AI_CONF_DIR}/shared/docker.sh
+. ${AI_CONF_DIR}/shared/key.sh
 
 # Media
 unset -f mov2mp4
@@ -38,9 +39,6 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 # Additional completion
 [ -f ${BREW_PREFIX}/etc/bash_completion ] && . ${BREW_PREFIX}/etc/bash_completion
-
-# Load autoconfig
-. $AI_CONF_DIR/mac/autocomplete.sh
 
 # Load machine specific configs
 [ ! -d ~/.bash_profile.d ] && mkdir ~/.bash_profile.d

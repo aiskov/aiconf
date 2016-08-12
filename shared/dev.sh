@@ -11,26 +11,6 @@ fi
 
 export DEV_DIR="$HOME/Development"
 
-
-# Navigation
-unset -f to
-to() {
-    case "$1" in
-        "dev")
-            cd $DEV_DIR
-            ;;
-        "vm")
-            cd $VM_DIR
-            ;;
-        "log")
-            cd $LOG_DIR
-            ;;
-        *)
-            cd
-            ;;
-    esac
-}
-
 # Development
 unset -f sublime
 sublime() {
