@@ -11,7 +11,7 @@ key() {
             fi
 
             if [ "$2" == "java" ]; then
-                keytool -import -trustcacerts -keystore ${JAVA_HOME}/jre/lib/security/cacerts -noprompt -alias ${alias_name} -file $3
+                sudo keytool -import -trustcacerts -keystore ${JAVA_HOME}/jre/lib/security/cacerts -noprompt -alias ${alias_name} -file $3
             else
                 keytool -import -trustcacerts -keystore $2 -noprompt -alias ${alias_name} -file $3
             fi
