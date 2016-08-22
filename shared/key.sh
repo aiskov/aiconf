@@ -16,6 +16,21 @@ key() {
                 keytool -import -trustcacerts -keystore $2 -noprompt -alias ${alias_name} -file $3
             fi
             ;;
+        "remove")
+            if [ "$2" == "java" ]; then
+                sudo keytool -delete -keystore ${JAVA_HOME}/jre/lib/security/cacerts -noprompt -alias $3
+
+            else
+                keytool -delete -keystore $2 -noprompt -alias $3
+            fi
+            ;;
+        "list")
+            if [ "$2" == "java" ]; then
+                sudo keytool -list -v -keystore ${JAVA_HOME}/jre/lib/security/cacerts 
+            else
+                keytool -list -v -keystore $3
+            fi
+            ;;
         "verify")
             openssl x509 -in $2 -text
             ;;
@@ -33,7 +48,7 @@ _key() {
     local prev=${COMP_WORDS[COMP_CWORD-1]}
 
     if [ $COMP_CWORD -eq 1 ]; then
-        local options=("add" "download" "verify")
+        local options=("add" "download" "verify" "remove" "list")
         options=$(join ' ' ${options[@]})
         COMPREPLY=($(compgen -W '$options' -- "$cur"))
     fi
