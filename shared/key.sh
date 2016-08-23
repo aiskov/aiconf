@@ -26,7 +26,7 @@ key() {
             ;;
         "list")
             if [ "$2" == "java" ]; then
-                sudo keytool -list -v -keystore ${JAVA_HOME}/jre/lib/security/cacerts 
+                sudo keytool -list -v -keystore ${JAVA_HOME}/jre/lib/security/cacerts
             else
                 keytool -list -v -keystore $3
             fi
