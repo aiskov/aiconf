@@ -16,6 +16,7 @@ brew install p7zip
 brew install HTTPie
 brew install gnupg
 brew install ssh-copy-id
+brew install links
 
 brew install bash-completion
 
