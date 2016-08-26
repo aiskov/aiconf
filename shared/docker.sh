@@ -11,6 +11,9 @@ fi
 unset -f d
 d() {
     case "$1" in
+        "help")
+            echo "ps img rmi pull push build daemon attach logs run stop rm bash stats"
+            ;;
         "ps")
             case $2 in
                 "--names")

@@ -23,7 +23,6 @@ brew install bash-completion
 brew install jenv
 brew install jmeter
 
-brew cask 
 brew cask install java
 brew cask install intellij-idea
 brew cask install postman
@@ -81,6 +80,8 @@ sudo pip install pymongo
 sudo pip install cassandra-driver
 sudo pip install requests
 sudo pip install execsql
+
+sudo pip3 install ipython
 
 sudo pip3 install pymongo
 sudo pip3 install cassandra-driver
