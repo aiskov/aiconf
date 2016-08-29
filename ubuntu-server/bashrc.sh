@@ -97,3 +97,7 @@ aiconf() {
     cd ${_cur_dir} &> /dev/null
 }
 
+. ${AI_CONF_DIR}/shared/init.sh
+. ${AI_CONF_DIR}/shared/utils.sh
+. ${AI_CONF_DIR}/shared/docker.sh
+. ${AI_CONF_DIR}/shared/key.sh
