@@ -67,7 +67,7 @@ echo '\____|__  /___|  \______  /\____/|___|  /__|   '
 echo '        \/              \/            \/       '
 
 # Locations
-export AI_CONF_DIR="$DEV_DIR/aiconf"
+export AI_CONF_DIR="$HOME/aiconf"
 
 export LOG_DIR="/var/log"
 
