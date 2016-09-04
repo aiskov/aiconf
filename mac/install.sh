@@ -17,7 +17,14 @@ brew install HTTPie
 brew install gnupg
 brew install ssh-copy-id
 brew install links
+
 brew install npm
+npm install -g grunt
+
+npm install -g grunt-contrib-concat
+npm install -g grunt-contrib-uglify
+npm install -g grunt-contrib-cssmin
+npm install -g grunt-contrib-htmlmin
 
 brew install bash-completion
 
