@@ -17,6 +17,7 @@ brew install HTTPie
 brew install gnupg
 brew install ssh-copy-id
 brew install links
+brew install npm
 
 brew install bash-completion
 
