@@ -53,7 +53,7 @@ all_dirs() {
 
 # Others
 pc() {
-    python -c 'exit(${@})'
+    python -c "exit(${@})"
 }
 
 # Work with proc
