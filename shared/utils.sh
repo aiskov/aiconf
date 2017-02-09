@@ -51,6 +51,11 @@ all_dirs() {
     echo "$dirs" | sed "s|^$target||g" | sed "s|^/||g" | sed '/^\s*$/d'
 }
 
+# Others
+pc() {
+    python -c 'exit(${@})'
+}
+
 # Work with proc
 alias is_runned="ps aux | grep -v grep | grep"
 alias mem_top="ps wwaxm -o pid,%cpu,command | head -5"
