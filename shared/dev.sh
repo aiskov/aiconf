@@ -20,6 +20,7 @@ sublime() {
 # Git
 alias git_cancel="git reset --soft HEAD~"
 
+unset -f json
 json() {
-    echo ${1} | python -m json.tool
+    echo "${1}" | tr '\n' ' ' | python -m json.tool
 }
