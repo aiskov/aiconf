@@ -20,6 +20,7 @@ brew install links
 
 brew install npm
 npm install -g grunt
+npm install -g cordova ionic phonegap
 
 npm install -g grunt-contrib-concat
 npm install -g grunt-contrib-uglify
