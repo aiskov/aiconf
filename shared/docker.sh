@@ -2,7 +2,7 @@
 
 # Work with docker
 if [ $OSTYPE == "linux-gnu" ]; then
-    echo "Docker host: $DOCKER_HOST"
+    echo "Docker host: ${DOCKER_HOST}"
     # export DOCKER_HOST=""
 else
     export DOCKER_HOST=unix:///var/run/docker.sock
@@ -90,6 +90,7 @@ d() {
             ;;
         "restart")
             docker restart ${@:2}
+            ;;
         "rm")
             if [ "$2" = "all" ]; then
                 TARGETS="$(docker ps -a -q)"
@@ -200,7 +201,7 @@ _d() {
                 ;;
             "logs")
                 local names=$(d ps --names -a | tr '\n' ' ')
-                local options=("-f" "--follow" "--since" "-t" "--timestamps" "--tail")
+                local options=("--since" "-t" "--timestamps" "--tail")
                 options=$(join ' ' ${options[@]})
                 COMPREPLY=($(compgen -W '$names $options' -- "$cur"))
                 ;;
@@ -232,7 +233,7 @@ _d() {
                 ;;
             "rm")
                 local names=$(d ps --names -a | tr '\n' ' ')
-                local options=("-f" "--force" "-l" "--link" "-v" "--volumes" "all" "stopped")
+                local options=("-l" "--link" "-v" "--volumes" "all" "stopped")
                 options=$(join ' ' ${options[@]})
                 COMPREPLY=($(compgen -W '$names $options' -- "$cur"))
                 ;;
@@ -254,4 +255,3 @@ _d() {
     return 0
 }
 complete -F _d -o default d
-
