@@ -3,6 +3,13 @@
 unset -f key
 key() {
     case "$1" in
+        "generate")
+            if [ "$2" == "key" ]; then
+                openssl req -newkey rsa:2048 -nodes -keyout $3
+            elif [ "$2" == "cert" ]; then
+                openssl req -key $3 -new -out $4
+            fi
+            ;;
         "add")
             if [ -n "$4" ]; then
                 local alias_name=${4}
@@ -48,7 +55,7 @@ _key() {
     local prev=${COMP_WORDS[COMP_CWORD-1]}
 
     if [ $COMP_CWORD -eq 1 ]; then
-        local options=("add" "download" "verify" "remove" "list")
+        local options=("add" "download" "verify" "remove" "list" "generate")
         options=$(join ' ' ${options[@]})
         COMPREPLY=($(compgen -W '$options' -- "$cur"))
     fi
@@ -56,5 +63,3 @@ _key() {
     return 0
 }
 complete -F _key -o default key
-
-
