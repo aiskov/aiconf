@@ -88,6 +88,8 @@ d() {
                 docker stop ${@:2}
             fi
             ;;
+        "restart")
+            docker restart ${@:2}
         "rm")
             if [ "$2" = "all" ]; then
                 TARGETS="$(docker ps -a -q)"
@@ -140,7 +142,7 @@ _d() {
 
     if [ $COMP_CWORD -eq 1 ]; then
         local options=("ps" "img" "rmi" "pull" "push" "build" "daemon" "attach" "logs" "run" "stop"
-                       "rm" "bash" "stats")
+                       "rm" "bash" "stats" "restart")
         options=$(join ' ' ${options[@]})
         COMPREPLY=($(compgen -W '$options' -- "$cur"))
     elif [ $COMP_CWORD -ge 2 ]; then
@@ -219,6 +221,12 @@ _d() {
             "stop")
                 local names=$(d ps --names -a | tr '\n' ' ')
                 local options=("all")
+                options=$(join ' ' ${options[@]})
+                COMPREPLY=($(compgen -W '$names $options' -- "$cur"))
+                ;;
+            "restart")
+                local names=$(d ps --names -a | tr '\n' ' ')
+                local options=("--time" "-t")
                 options=$(join ' ' ${options[@]})
                 COMPREPLY=($(compgen -W '$names $options' -- "$cur"))
                 ;;
