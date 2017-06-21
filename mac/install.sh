@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "This is list of commands not script!"
+echo "It's list of commands not a script!"
 exit 0
 
 # Install brew
@@ -62,17 +62,20 @@ brew cask install skype
 
 brew install ansible
 
-# Install java 
-# TODO: Download and install java.
-
 # Install sdkman
 curl -s "https://get.sdkman.io" | bash
 source "$HOME/.sdkman/bin/sdkman-init.sh"
 sdk version
 
-# Install java tools
+# Install java 
+sdk install java
+
+# Install JVM languages
 sdk install scala
 sdk install groovy
+sdk install kotlin
+
+# Install java tools
 sdk install maven
 sdk install sbt
 sdk install ant
