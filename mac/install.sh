@@ -60,6 +60,8 @@ brew cask install sourcetree
 brew cask install slack
 brew cask install skype
 
+brew cask install etcherbe
+
 brew install arp-scan
 
 brew install ansible
