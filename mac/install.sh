@@ -35,8 +35,13 @@ brew install jmeter
 brew cask install java
 brew cask install intellij-idea
 brew cask install postman
+<<<<<<< HEAD
 brew cask install visual-studio-code
 brew cask install sublime-text
+=======
+brew cask install atom
+brew cask install visual-studio-code
+>>>>>>> d2d4539e4fd3d9f0122591af7b26fc8fd01e1be3
 brew cask install android-studio
 brew cask install docker
 brew cask install kitematic
@@ -59,6 +64,10 @@ brew cask install keystore-explorer
 brew cask install sourcetree
 brew cask install slack
 brew cask install skype
+
+brew cask install etcherbe
+
+brew install arp-scan
 
 brew install ansible
 
