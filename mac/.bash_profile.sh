@@ -31,9 +31,6 @@ alias kill_chrome="killall 'Google Chrome Helper' && killall 'Google Chrome'"
 alias kill_safari="killall Safari && killall SafariCloudHistoryPushAgent && killall com.apple.Safari.ImageDecoder"
 alias kill_mysql_workbench="killall MySQLWorkbench"
 
-# Provisioning
-[ -d "$DEV_DIR/jiss-provision" ] && . "$DEV_DIR/jiss-provision/aliases.sh"
-
 # SDKMan
 export SDKMAN_DIR="$HOME/.sdkman"
 [ -d "$SDKMAN_DIR" ] && source "$SDKMAN_DIR/bin/sdkman-init.sh"

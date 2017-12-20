@@ -35,7 +35,7 @@ brew install jmeter
 brew cask install java
 brew cask install intellij-idea
 brew cask install postman
-brew cask install atom
+brew cask install visual-studio-code
 brew cask install sublime-text
 brew cask install android-studio
 brew cask install docker
