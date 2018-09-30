@@ -38,6 +38,9 @@ export SDKMAN_DIR="$HOME/.sdkman"
 # Additional completion
 [ -f ${BREW_PREFIX}/etc/bash_completion ] && . ${BREW_PREFIX}/etc/bash_completion
 
+# Run sync 
+${AI_CONF_DIR}/mac/backup.sh 2>&1 >> ${AI_BACKUP_REPORT} &
+
 # Load machine specific configs
 [ ! -d ~/.bash_profile.d ] && mkdir ~/.bash_profile.d
 load_scripts ~/.bash_profile.d

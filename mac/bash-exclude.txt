@@ -1,0 +1,9 @@
+venv/
+env/
+.git/
+node_modules/
+target/
+build/
+.gradle/
+.bin/
+.DS_Store/
