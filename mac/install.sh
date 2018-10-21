@@ -32,7 +32,9 @@ brew install bash-completion
 brew install jenv
 brew install jmeter
 
-brew cask install java
+brew cask install 1password
+brew cask install 1password-cli
+brew cask install fork
 brew cask install intellij-idea
 brew cask install postman
 brew cask install visual-studio-code
@@ -45,8 +47,8 @@ brew cask install visualvm
 
 brew cask install vagrant
 brew cask install soapui
-brew cask install mysqlworkbench
-brew cask install robomongo
+# removed: brew cask install mysqlworkbench
+brew cask install robo-3t
 
 brew cask install libreoffice
 brew cask install vlc
