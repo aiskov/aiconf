@@ -59,6 +59,8 @@ xterm*|rxvt*)
     ;;
 esac
 
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+
 export AI_CONF_DIR="$HOME/Development/aiconf"
 
 . ${AI_CONF_DIR}/shared/init.sh
