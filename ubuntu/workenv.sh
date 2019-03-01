@@ -4,6 +4,7 @@ apt install -y htop
 apt install -y docker.io
 apt install -y docker-compose
 apt install -y net-tools
+apt install -y nmap
 
 groupadd docker
 sudo usermod -aG docker $USER

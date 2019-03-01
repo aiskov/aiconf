@@ -74,17 +74,3 @@ alias aid_date_time='date "+%Y-%m-%dT%H:%M:%S"'
 alias watch="tail -f"
 alias search="find . -name"
 alias rsearch="find . -regex"
-
-# Networking
-alias edit_hosts="sudo nano /etc/hosts"
-alias my_ip="curl ip.appspot.com && echo"
-alias open_conn="lsof -i"
-alias open_ports="lsof -i | grep LISTEN"
-ping_port() {
-    nmap -p $2 $1
-}
-alias flush_dns="dscacheutil -flushcache"
-alias airport="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport"
-alias flush_dns="sudo killall -HUP mDNSResponder"
-alias wifi_on="networksetup -setairportpower airport on"
-alias wifi_off="networksetup -setairportpower airport off"

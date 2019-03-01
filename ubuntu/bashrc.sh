@@ -68,3 +68,4 @@ export AI_CONF_DIR="$HOME/Development/aiconf"
 . ${AI_CONF_DIR}/shared/vm.sh
 . ${AI_CONF_DIR}/shared/dev.sh
 . ${AI_CONF_DIR}/shared/docker.sh
+. ${AI_CONF_DIR}/shared/network.sh

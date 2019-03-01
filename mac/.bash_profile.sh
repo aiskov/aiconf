@@ -6,6 +6,7 @@ export BREW_PREFIX="$(brew --prefix)"
 
 . ${AI_CONF_DIR}/shared/init.sh
 . ${AI_CONF_DIR}/shared/utils.sh
+. ${AI_CONF_DIR}/shared/network.sh
 . ${AI_CONF_DIR}/shared/vm.sh
 . ${AI_CONF_DIR}/shared/vagrant.sh
 . ${AI_CONF_DIR}/shared/dev.sh
