@@ -14,12 +14,13 @@ curl -s "https://get.sdkman.io" | bash
 
 sdk install java
 sdk install groovy
-
+sdk install gradle
 
 # Others:
 # - IntelliJ
 # - slack
 # - Visual Studio Code
+# - Chrome
 #
 # IntelliJ Plugins:
 # - Lombok
@@ -27,3 +28,7 @@ sdk install groovy
 # - Checkstyle
 # - Sonar Lint
 # - Bash
+#
+# Chrome configuration:
+# - 1Password
+# - Langauges: Polish, Russian
