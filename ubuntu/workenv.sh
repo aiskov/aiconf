@@ -19,3 +19,11 @@ sdk install groovy
 # Others:
 # - IntelliJ
 # - slack
+# - Visual Studio Code
+#
+# IntelliJ Plugins:
+# - Lombok
+# - .Ignore
+# - Checkstyle
+# - Sonar Lint
+# - Bash
