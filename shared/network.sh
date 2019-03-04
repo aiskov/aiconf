@@ -3,9 +3,17 @@
 # Networking
 alias edit_hosts="sudo nano /etc/hosts"
 
-
 alias open_conn="lsof -i"
-alias open_ports="lsof -i | grep LISTEN"
+
+unset -f open_ports
+open_ports() {
+    echo 'lsof -i: '
+    lsof -i | grep LISTEN
+    
+    echo '-----------------------------'
+    echo 'netstat -an: '
+    netstat -an | grep 'LISTEN '
+}
 
 ping_port() {
     nmap -p $2 $1
@@ -13,7 +21,7 @@ ping_port() {
 alias flush_dns="dscacheutil -flushcache"
 alias flush_dns="sudo killall -HUP mDNSResponder"
 
-alias wifi="netstat -an | grep LISTEN | grep tcp"
+alias wifi=""
 
 if [ $OSTYPE == "darwin" ]
 then
