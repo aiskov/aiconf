@@ -72,6 +72,9 @@ d() {
         "logs")
             docker logs ${@:2} 2>&1 | less
             ;;
+        "inspect")
+             docker inspect ${@:2} 2>&1 | less
+            ;;
         "run")
             docker run -t -i --net=host ${@:2}
             ;;
@@ -119,7 +122,7 @@ d() {
             TARGETS="$(d ps --names)"
 
             if [ -z "$TARGETS" ]; then
-                echo "No active containers found"
+                echo "No active containers found."
             else
                 if [ "$2" = "" ]; then
                     docker stats ${TARGETS}
@@ -142,7 +145,7 @@ _d() {
     local prev=${COMP_WORDS[COMP_CWORD-1]}
 
     if [ $COMP_CWORD -eq 1 ]; then
-        local options=("ps" "img" "rmi" "pull" "push" "build" "daemon" "attach" "logs" "run" "stop"
+        local options=("ps" "img" "rmi" "pull" "push" "build" "daemon" "attach" "logs" "inspect" "run" "stop"
                        "rm" "bash" "stats" "restart")
         options=$(join ' ' ${options[@]})
         COMPREPLY=($(compgen -W '$options' -- "$cur"))
@@ -202,6 +205,12 @@ _d() {
             "logs")
                 local names=$(d ps --names -a | tr '\n' ' ')
                 local options=("--since" "-t" "--timestamps" "--tail")
+                options=$(join ' ' ${options[@]})
+                COMPREPLY=($(compgen -W '$names $options' -- "$cur"))
+                ;;
+            "inspect")
+                local names=$(d ps --names -a | tr '\n' ' ')
+                local options=("--format" "-f" "--size"  "-s" "--type")
                 options=$(join ' ' ${options[@]})
                 COMPREPLY=($(compgen -W '$names $options' -- "$cur"))
                 ;;
