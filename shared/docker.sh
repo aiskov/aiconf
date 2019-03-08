@@ -30,6 +30,19 @@ d() {
                     ;;
             esac
             ;;
+        "volumes")
+            case $2 in
+                "--names")
+                    docker volume ls --format '{{.Name}}' ${@:3}
+                    ;;
+                "--compose")
+                    docker volume ls --format '{{.Name}}\t{{.Label "com.docker.compose.project"}}\t{{.Label "com.docker.compose.volume"}}' ${@:3}
+                    ;;
+                *)
+                    docker volume ls ${@:2}
+                    ;;
+            esac
+            ;;
         "img")
             docker images ${@:2}
             ;;
@@ -74,6 +87,9 @@ d() {
             ;;
         "inspect")
              docker inspect ${@:2} 2>&1 | less
+            ;;
+        "v-inspect")
+             docker volume inspect ${@:2} 2>&1 | less
             ;;
         "run")
             docker run -t -i --net=host ${@:2}
@@ -146,7 +162,7 @@ _d() {
 
     if [ $COMP_CWORD -eq 1 ]; then
         local options=("ps" "img" "rmi" "pull" "push" "build" "daemon" "attach" "logs" "inspect" "run" "stop"
-                       "rm" "bash" "stats" "restart")
+                       "rm" "bash" "stats" "restart" "volumes" "v-inspect")
         options=$(join ' ' ${options[@]})
         COMPREPLY=($(compgen -W '$options' -- "$cur"))
     elif [ $COMP_CWORD -ge 2 ]; then
@@ -157,6 +173,12 @@ _d() {
                 options=$(join ' ' ${options[@]})
                 COMPREPLY=($(compgen -W '$options' -- "$cur"))
                 ;;
+            "volumes")
+                local options=("--filter" "-f" "--format" "--quiet" "-q" "--names" "--compose")
+                options=$(join ' ' ${options[@]})
+                COMPREPLY=($(compgen -W '$options' -- "$cur"))
+                ;;
+
             "img")
                 local options=("-a" "--all" "--digests" "-f" "--filter" "--format" "--help" "--no-trunc" "-q" "--quiet")
                 options=$(join ' ' ${options[@]})
@@ -211,6 +233,12 @@ _d() {
             "inspect")
                 local names=$(d ps --names -a | tr '\n' ' ')
                 local options=("--format" "-f" "--size"  "-s" "--type")
+                options=$(join ' ' ${options[@]})
+                COMPREPLY=($(compgen -W '$names $options' -- "$cur"))
+                ;;
+            "v-inspect")
+                local names=$(d volumes --names | tr '\n' ' ')
+                local options=("--format" "-f")
                 options=$(join ' ' ${options[@]})
                 COMPREPLY=($(compgen -W '$names $options' -- "$cur"))
                 ;;
