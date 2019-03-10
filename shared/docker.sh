@@ -12,7 +12,7 @@ unset -f d
 d() {
     case "$1" in
         "help")
-            echo "ps img rmi pull push build daemon attach logs run stop rm bash stats"
+            echo "ps, img, rmi, pull, push, build, daemon, attach, logs, run, stop, rm, bash, stats, restart, cleanup"
             ;;
         "ps")
             case $2 in
@@ -32,6 +32,9 @@ d() {
             ;;
         "img")
             docker images ${@:2}
+            ;;
+        "cleanup")
+            docker system prune --all --force --volumes
             ;;
         "rmi")
             if [ "$2" = "untagged" ]; then
@@ -143,7 +146,7 @@ _d() {
 
     if [ $COMP_CWORD -eq 1 ]; then
         local options=("ps" "img" "rmi" "pull" "push" "build" "daemon" "attach" "logs" "run" "stop"
-                       "rm" "bash" "stats" "restart")
+                       "rm" "bash" "stats" "restart" "cleanup")
         options=$(join ' ' ${options[@]})
         COMPREPLY=($(compgen -W '$options' -- "$cur"))
     elif [ $COMP_CWORD -ge 2 ]; then
