@@ -12,7 +12,8 @@ unset -f d
 d() {
     case "$1" in
         "help")
-            echo "ps, img, rmi, pull, push, build, daemon, attach, logs, run, stop, rm, bash, stats, restart, cleanup"
+            echo "ps" "img" "rmi" "pull" "push" "build" "daemon" "attach" "logs" "inspect" "run" "stop" \
+                       "rm" "bash" "stats" "restart" "cleanup"  "volumes" "v-inspect"
             ;;
         "ps")
             case $2 in
@@ -27,6 +28,19 @@ d() {
                     ;;
                 *)
                     docker ps ${@:2}
+                    ;;
+            esac
+            ;;
+        "volumes")
+            case $2 in
+                "--names")
+                    docker volume ls --format '{{.Name}}' ${@:3}
+                    ;;
+                "--compose")
+                    docker volume ls --format '{{.Name}}\t{{.Label "com.docker.compose.project"}}\t{{.Label "com.docker.compose.volume"}}' ${@:3}
+                    ;;
+                *)
+                    docker volume ls ${@:2}
                     ;;
             esac
             ;;
@@ -75,6 +89,12 @@ d() {
         "logs")
             docker logs ${@:2} 2>&1 | less
             ;;
+        "inspect")
+             docker inspect ${@:2} 2>&1 | less
+            ;;
+        "v-inspect")
+             docker volume inspect ${@:2} 2>&1 | less
+            ;;
         "run")
             docker run -t -i --net=host ${@:2}
             ;;
@@ -122,7 +142,7 @@ d() {
             TARGETS="$(d ps --names)"
 
             if [ -z "$TARGETS" ]; then
-                echo "No active containers found"
+                echo "No active containers found."
             else
                 if [ "$2" = "" ]; then
                     docker stats ${TARGETS}
@@ -145,8 +165,8 @@ _d() {
     local prev=${COMP_WORDS[COMP_CWORD-1]}
 
     if [ $COMP_CWORD -eq 1 ]; then
-        local options=("ps" "img" "rmi" "pull" "push" "build" "daemon" "attach" "logs" "run" "stop"
-                       "rm" "bash" "stats" "restart" "cleanup")
+        local options=("ps" "img" "rmi" "pull" "push" "build" "daemon" "attach" "logs" "inspect" "run" "stop"
+                       "rm" "bash" "stats" "restart" "cleanup"  "volumes" "v-inspect")
         options=$(join ' ' ${options[@]})
         COMPREPLY=($(compgen -W '$options' -- "$cur"))
     elif [ $COMP_CWORD -ge 2 ]; then
@@ -157,6 +177,12 @@ _d() {
                 options=$(join ' ' ${options[@]})
                 COMPREPLY=($(compgen -W '$options' -- "$cur"))
                 ;;
+            "volumes")
+                local options=("--filter" "-f" "--format" "--quiet" "-q" "--names" "--compose")
+                options=$(join ' ' ${options[@]})
+                COMPREPLY=($(compgen -W '$options' -- "$cur"))
+                ;;
+
             "img")
                 local options=("-a" "--all" "--digests" "-f" "--filter" "--format" "--help" "--no-trunc" "-q" "--quiet")
                 options=$(join ' ' ${options[@]})
@@ -205,6 +231,18 @@ _d() {
             "logs")
                 local names=$(d ps --names -a | tr '\n' ' ')
                 local options=("--since" "-t" "--timestamps" "--tail")
+                options=$(join ' ' ${options[@]})
+                COMPREPLY=($(compgen -W '$names $options' -- "$cur"))
+                ;;
+            "inspect")
+                local names=$(d ps --names -a | tr '\n' ' ')
+                local options=("--format" "-f" "--size"  "-s" "--type")
+                options=$(join ' ' ${options[@]})
+                COMPREPLY=($(compgen -W '$names $options' -- "$cur"))
+                ;;
+            "v-inspect")
+                local names=$(d volumes --names | tr '\n' ' ')
+                local options=("--format" "-f")
                 options=$(join ' ' ${options[@]})
                 COMPREPLY=($(compgen -W '$names $options' -- "$cur"))
                 ;;
