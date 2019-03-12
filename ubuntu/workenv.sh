@@ -16,6 +16,14 @@ sdk install java
 sdk install groovy
 sdk install gradle
 
+curl -s https://api.github.com/repos/kaikramer/keystore-explorer/releases/latest \
+    | grep browser_download_url \
+    | grep all.deb \
+    | cut -d : -f 2,3 \
+    | tr -d '[:space:]' \
+    | tr -d '["]' \
+    | xargs wget
+    
 # Others:
 # - IntelliJ
 # - slack

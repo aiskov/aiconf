@@ -57,6 +57,12 @@ pc() {
     python -c "print(${str})"
 }
 
+github_download_last() {
+    api="https://api.github.com/repos/${1}/releases/latest"
+    url=$(curl -s "${api}" | grep browser_download_url | grep "${2-.zip}" | cut -d : -f 2,3 | tr -d '[:space:]' | tr -d '["]')
+    wget "${url}" 
+}
+
 # Work with proc
 alias is_runned="ps aux | grep -v grep | grep"
 alias mem_top="ps wwaxm -o pid,%cpu,command | head -5"
