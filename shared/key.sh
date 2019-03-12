@@ -1,5 +1,20 @@
 #!/usr/bin/env bash
 
+unset -f import_key
+import_key() {
+    if [ $OSTYPE == "linux-gnu" ]
+    then
+        DIRECTORY=/usr/local/share/ca-certificates/cacert.org
+
+        [ ! -d "$DIRECTORY" ] && mkdir -p "${DIRECTORY}"
+        
+        wget -q -O /usr/local/share/ca-certificates/cacert.org/ "${1}"
+        update-ca-certificates
+    else 
+        echo "Key import for mac not available." >&2
+    fi
+}
+
 unset -f key
 key() {
     case "$1" in
