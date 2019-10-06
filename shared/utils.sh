@@ -52,9 +52,23 @@ all_dirs() {
 }
 
 # Others
+unset -f pc
 pc() {
     str="$*"
     python -c "print(${str})"
+}
+
+unset -f github_download_last
+github_download_last() {
+    api="https://api.github.com/repos/${1}/releases/latest"
+    url=$(curl -s "${api}" | grep browser_download_url | grep "${2-.zip}" | cut -d : -f 2,3 | tr -d '[:space:]' | tr -d '["]')
+    wget "${url}" 
+}
+
+unset -f sudof
+sudof() {
+    FUNC=$(declare -f ${1})
+    sudo bash -c "${FUNC}; ${1} ${@:2}; unset -f ${1}"
 }
 
 # Work with proc

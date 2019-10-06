@@ -1,7 +1,32 @@
 #!/usr/bin/env bash
 
+unset -f import_key
+import_key() {
+    if [ $OSTYPE == "linux-gnu" ]
+    then
+        DIRECTORY=/usr/local/share/ca-certificates/cacert.org
+
+        [ ! -d "$DIRECTORY" ] && mkdir -p "${DIRECTORY}"
+        
+        wget -q -O /usr/local/share/ca-certificates/cacert.org/ "${1}"
+        update-ca-certificates
+    else 
+        echo "Key import for mac not available." >&2
+    fi
+}
+
 unset -f key
 key() {
+    LEGACY_PATH=${JAVA_HOME}/jre/lib/security/cacerts
+    NEW_PATH=${JAVA_HOME}/lib/security/cacerts
+
+    if [ -f "${LEGACY_PATH}" ]
+    then
+        JAVA_KEYSTORE_PATH="${LEGACY_PATH}"
+    else 
+        JAVA_KEYSTORE_PATH="${NEW_PATH}"
+    fi
+
     case "$1" in
         "generate")
             if [ "$2" == "key" ]; then
@@ -17,15 +42,16 @@ key() {
                 local alias_name=$(basename /var/log/daily.out)
             fi
 
-            if [ "$2" == "java" ]; then
-                sudo keytool -import -trustcacerts -keystore ${JAVA_HOME}/jre/lib/security/cacerts -noprompt -alias ${alias_name} -file $3
+            if [ "$2" == "java" ]
+            then
+                sudo keytool -import -trustcacerts -keystore ${JAVA_KEYSTORE_PATH} -noprompt -alias ${alias_name} -file $3
             else
                 keytool -import -trustcacerts -keystore $2 -noprompt -alias ${alias_name} -file $3
             fi
             ;;
         "remove")
             if [ "$2" == "java" ]; then
-                sudo keytool -delete -keystore ${JAVA_HOME}/jre/lib/security/cacerts -noprompt -alias $3
+                sudo keytool -delete -keystore ${JAVA_KEYSTORE_PATH} -noprompt -alias $3
 
             else
                 keytool -delete -keystore $2 -noprompt -alias $3
@@ -33,7 +59,7 @@ key() {
             ;;
         "list")
             if [ "$2" == "java" ]; then
-                sudo keytool -list -v -keystore ${JAVA_HOME}/jre/lib/security/cacerts
+                sudo keytool -list ${@:3} -keystore ${JAVA_KEYSTORE_PATH}
             else
                 keytool -list -v -keystore $3
             fi

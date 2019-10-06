@@ -13,7 +13,7 @@ d() {
     case "$1" in
         "help")
             echo "ps" "img" "rmi" "pull" "push" "build" "daemon" "attach" "logs" "inspect" "run" "stop" \
-                       "rm" "bash" "stats" "restart" "cleanup"  "volumes" "v-inspect"
+                       "rm" "bash" "stats" "restart" "cleanup"  "volumes" "v-inspect" "get-ip"
             ;;
         "ps")
             case $2 in
@@ -90,10 +90,13 @@ d() {
             docker logs ${@:2} 2>&1 | less
             ;;
         "inspect")
-             docker inspect ${@:2} 2>&1 | less
+            docker inspect ${@:2} 2>&1 | less
             ;;
         "v-inspect")
-             docker volume inspect ${@:2} 2>&1 | less
+            docker volume inspect ${@:2} 2>&1 | less
+            ;;
+        "get-ip")
+            docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" ${2}
             ;;
         "run")
             docker run -t -i --net=host ${@:2}
@@ -166,7 +169,7 @@ _d() {
 
     if [ $COMP_CWORD -eq 1 ]; then
         local options=("ps" "img" "rmi" "pull" "push" "build" "daemon" "attach" "logs" "inspect" "run" "stop"
-                       "rm" "bash" "stats" "restart" "cleanup"  "volumes" "v-inspect")
+                       "rm" "bash" "stats" "restart" "cleanup"  "volumes" "v-inspect" "get-ip")
         options=$(join ' ' ${options[@]})
         COMPREPLY=($(compgen -W '$options' -- "$cur"))
     elif [ $COMP_CWORD -ge 2 ]; then
@@ -245,6 +248,10 @@ _d() {
                 local options=("--format" "-f")
                 options=$(join ' ' ${options[@]})
                 COMPREPLY=($(compgen -W '$names $options' -- "$cur"))
+                ;;
+            "get-ip")
+                local names=$(d ps --names | tr '\n' ' ')
+                COMPREPLY=($(compgen -W '$names' -- "$cur"))
                 ;;
             "run")
                 local options=("-a" "--attach" "--add-host" "--blkio-weight" "-c" "--cpu-shares" "--cap-add"
