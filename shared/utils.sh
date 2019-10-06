@@ -71,6 +71,5 @@ alias aid_time='date "+%H:%M:%S"'
 alias aid_date_time='date "+%Y-%m-%dT%H:%M:%S"'
 
 # Work with files
-alias watch="tail -f"
 alias search="find . -name"
 alias rsearch="find . -regex"
