@@ -17,6 +17,7 @@ brew install HTTPie
 brew install gnupg
 brew install ssh-copy-id
 brew install links
+brew install watch
 
 brew install npm
 npm install -g grunt
