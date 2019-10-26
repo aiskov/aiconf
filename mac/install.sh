@@ -63,6 +63,8 @@ brew cask install sourcetree
 brew cask install slack
 brew cask install skype
 
+brew cask install typora
+
 brew cask install etcherbe
 
 brew install arp-scan
