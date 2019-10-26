@@ -62,6 +62,7 @@ esac
 source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 export AI_CONF_DIR="$HOME/Development/aiconf"
+export AI_NOTES_DIR="$HOME/Development/personal-notes"
 
 . ${AI_CONF_DIR}/shared/init.sh
 . ${AI_CONF_DIR}/shared/utils.sh

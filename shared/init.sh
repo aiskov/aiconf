@@ -10,13 +10,13 @@ echo '        \/              \/            \/       '
 # Configuration management
 unset -f aiconf
 aiconf() {
-    if [ $OSTYPE == "linux-gnu" ]; then
+    if [ $OSTYPE == "linux-gnu" ]
+    then
         local bash_profile=$HOME/.bashrc
     else
         local bash_profile=$HOME/.bash_profile
     fi
 
-    local _cur_dir=$(pwd)
     cd ${AI_CONF_DIR}
 
     case "$1" in
@@ -37,7 +37,7 @@ aiconf() {
             ;;
     esac
 
-    cd ${_cur_dir} &> /dev/null
+    cd - &> /dev/null
 }
 
 unset -f _aiconf
@@ -49,3 +49,43 @@ _aiconf() {
     return 0
 }
 complete -F _aiconf -o default aiconf
+
+# Notes management
+unset -f ainotes
+ainotes() {
+    if [ $OSTYPE == "linux-gnu" ]
+    then
+        local bash_profile=$HOME/.bashrc
+    else
+        local bash_profile=$HOME/.bash_profile
+    fi
+
+    local _cur_dir=$(pwd)
+    cd ${AI_CONF_DIR}
+
+    case "$1" in
+        "update")
+            git pull | grep '|\|Already'
+            ;;
+        "save")
+            git add -A
+            git commit -m"[AUTO] Save changes"
+            git push origin
+            ;;
+        *)
+            echo "Incorrect ainotes command: $@"
+            ;;
+    esac
+
+    cd - &> /dev/null
+}
+
+unset -f _ainotes
+_ainotes() {
+    local cur
+    _get_comp_words_by_ref cur
+    COMPREPLY=( $( compgen -W 'save update' -- "$cur" ) )
+
+    return 0
+}
+complete -F _ainotes -o default ainotes
