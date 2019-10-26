@@ -61,7 +61,7 @@ ainotes() {
     fi
 
     local _cur_dir=$(pwd)
-    cd ${AI_CONF_DIR}
+    cd ${AI_NOTES_DIR}
 
     case "$1" in
         "update")

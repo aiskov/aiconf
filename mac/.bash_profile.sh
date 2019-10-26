@@ -2,6 +2,7 @@
 
 # Locations
 export AI_CONF_DIR="$HOME/Development/aiconf"
+export AI_NOTES_DIR="$HOME/Development/personal-notes"
 export BREW_PREFIX="$(brew --prefix)"
 
 . ${AI_CONF_DIR}/shared/init.sh
