@@ -11,6 +11,8 @@ fi
 
 export DEV_DIR="$HOME/Development"
 
+alias tf=terraform -var-file=~/.aws/access.tfvars
+
 # Development
 unset -f sublime
 sublime() {
