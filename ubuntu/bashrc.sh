@@ -71,3 +71,7 @@ export AI_NOTES_DIR="$HOME/Development/personal-notes"
 . ${AI_CONF_DIR}/shared/docker.sh
 . ${AI_CONF_DIR}/shared/key.sh
 . ${AI_CONF_DIR}/shared/network.sh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
