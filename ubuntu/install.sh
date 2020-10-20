@@ -15,6 +15,9 @@ sdk install gradle
 git clone git@github.com:aiskov/aiconf.git
 
 mv ~/.bashrc ~/.bashrc_old
-ln -s aiconf/ubuntu/bashrc.sh .bashrc
+ln -s aiconf/ubuntu/bashrc.sh ~/.bashrc
+
+mv ~/.zshrc ~/.zshrc_old
+ln -s aiconf/ubuntu/zshrc.sh ~/.zshrc
 
 chsh -s $(which zsh)
